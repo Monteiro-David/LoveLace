@@ -78,11 +78,12 @@ Bash
 docker compose up -d
 Le fichier Lovelace.sql placé dans le dossier s'exécutera automatiquement au premier lancement pour initialiser les tables et insérer les données de test.
 
-3. Lancer le Backend
-Rends-toi dans le dossier backend :
+3. Configurer et Lancer le Backend
+Rends-toi dans le dossier Back-end :
 
 Bash
 cd backend
+Assure-toi d'avoir un fichier .env configuré avec tes accès (ex: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME).
 Installe les dépendances :
 
 Bash
@@ -91,11 +92,12 @@ Lance le serveur de développement :
 
 Bash
 npm run dev
+Le serveur écoute par défaut sur http://localhost:3000. Vous pouvez tester la connexion à la base de données en vous rendant sur : http://localhost:3000/api/test/test-db.
 4. Lancer le Frontend
-Ouvre un autre terminal et rends-toi dans le dossier frontend :
+Ouvre un autre terminal et rends-toi dans le dossier Front-end :
 
 Bash
-cd frontend
+cd Front-end
 Installe les dépendances :
 
 Bash
@@ -104,6 +106,17 @@ Lance l'application React :
 
 Bash
 npm run dev
+
+---
+
+## 🌿 Workflow Git & Collaboration
+Pour contribuer au projet, respectez les règles suivantes :
+
+Créez une branche dédiée par fonctionnalité : git checkout -b feature/VotreNom/nom-de-la-fonctionnalite
+
+Suivez la convention Conventional Commits pour vos messages (ex: feat(auth): ajout du formulaire de connexion, fix(db): correction de contrainte).
+
+Ouvrez une Pull Request sur GitHub pour validation avant fusion sur master / main.
 
 
 
