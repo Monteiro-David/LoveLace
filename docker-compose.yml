@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:16
+    container_name: Lovelace_db
+    environment:
+      POSTGRES_USER: ada
+      POSTGRES_PASSWORD: ada
+      POSTGRES_DB: Lovelace
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./Lovelace.sql:/docker-entrypoint-initdb.d/01-Lovelace.sql
+      - LoveLace-data:/var/lib/postgresql/data
+
+volumes:
+  LoveLace-data:
