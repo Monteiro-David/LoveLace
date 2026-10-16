@@ -1,12 +1,19 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import testRoutes from "./Routes/testRoutes.js";
+import utilisateurRoutes from "./Routes/utilisateurRoutes.js";
+import authRoutes from "./Routes/authRoutes.js";
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 
 app.use("/api/test", testRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/utilisateurs", utilisateurRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Bienvenue sur l'API de LoveLace !");
