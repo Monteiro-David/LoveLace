@@ -4,6 +4,7 @@ import cors from "cors";
 import testRoutes from "./Routes/testRoutes.js";
 import utilisateurRoutes from "./Routes/utilisateurRoutes.js";
 import authRoutes from "./Routes/authRoutes.js";
+import groupeRoutes from "./Routes/groupeRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/test", testRoutes);
+app.use("/api/groupe", groupeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/utilisateurs", utilisateurRoutes);
 
