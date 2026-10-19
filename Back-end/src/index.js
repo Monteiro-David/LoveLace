@@ -4,6 +4,7 @@ import cors from "cors";
 import testRoutes from "./Routes/testRoutes.js";
 import utilisateurRoutes from "./Routes/utilisateurRoutes.js";
 import authRoutes from "./Routes/authRoutes.js";
+import evenementRoutes from "./Routes/evenementRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api/test", testRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/utilisateurs", utilisateurRoutes);
+app.use("/api/evenements", evenementRoutes);
 
 
 app.get("/", (req, res) => {
