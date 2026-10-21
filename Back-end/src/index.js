@@ -5,6 +5,7 @@ import testRoutes from "./Routes/testRoutes.js";
 import utilisateurRoutes from "./Routes/utilisateurRoutes.js";
 import authRoutes from "./Routes/authRoutes.js";
 import groupeRoutes from "./Routes/groupeRoutes.js";
+import evenementRoutes from "./Routes/evenementRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ app.use("/api/test", testRoutes);
 app.use("/api/groupe", groupeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/utilisateurs", utilisateurRoutes);
+app.use("/api/evenements", evenementRoutes);
 
 
 app.get("/", (req, res) => {
