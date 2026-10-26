@@ -11,9 +11,10 @@ export const getProfilController = async (req, res) => {
     });
   } catch (error) {
     console.error("Erreur à la base de données:", error);
-    return res.status(500).json({  
-      success: false,
-      message: "Erreur lors de la récupération des utilisateurs"
+    const statusCode = error.status || 500;
+        return res.status(statusCode).json({ 
+        success: false,
+        message: error.message || "Erreur lors de la récupération des utilisateurs"
     });
   }
 };
@@ -37,9 +38,10 @@ export const updateProfilController = async (req, res) => {
                 message: "Ce pseudo ou cet email est déjà utilisé"
             });
         }
-        return res.status(500).json({
+        const statusCode = error.status || 500;
+        return res.status(statusCode).json({ 
             success: false,
-            message: "Erreur lors de la mise à jour du profil"
+            message: error.message || "Erreur lors de la mise à jour du profil"
         });
     }
 };

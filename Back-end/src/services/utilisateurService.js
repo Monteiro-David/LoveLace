@@ -2,7 +2,6 @@ import * as utilisateurModel from "../models/utilisateurModel.js";
 
 export const getUtilisateurService = async (id) => {
     const utilisateur = await utilisateurModel.getUtilisateurById(id);
-
     if (!utilisateur) {
         const error = new Error("Utilisateur non trouvé");
         error.status = 404;

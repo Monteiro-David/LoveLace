@@ -1,7 +1,7 @@
 import { pool } from "../config/db.js";
 
 export const getUtilisateurById = async (id) => {
-    const result = await pool.query( //--model 
+    const result = await pool.query(  
         `SELECT * 
         FROM utilisateur
         WHERE id = $1`, 
