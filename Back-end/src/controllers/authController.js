@@ -19,10 +19,10 @@ export const getauthinscriptionControle = async (req, res) => {
                 message: "L'email ou le pseudo est déjà utilisé"
             });
         }
-        
-        res.status(500).json({
+        const statusCode = error.status || 500;
+        return res.status(statusCode).json({ 
             success: false,
-            message: "Erreur lors de l'inscription "
+            message: error.message || "Erreur lors de l'inscription "
         });
       }
     
@@ -41,9 +41,10 @@ export const getauthConnexionControle = async (req, res) => {
         });
       } catch (error) {
         console.error("Erreur à la base de données:", error);
-        return res.status(500).json({
-          success: false,
-          message: "Erreur lors de la connexion"
+        const statusCode = error.status || 500;
+        return res.status(statusCode).json({ 
+            success: false,
+            message: error.message || "Erreur lors de la connexion"
         });
       }
 }
