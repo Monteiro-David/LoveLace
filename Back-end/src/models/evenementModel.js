@@ -127,3 +127,66 @@ export const supprimerEvenement = async (idEvenement) => {
     return result.rows[0];
 };
 
+export const getPropositionsParEvenement = async (idEvenement) => {
+    const query = `
+        SELECT
+            id,
+            type,
+            valeur,
+            nb_votes,
+            evenement_id
+        FROM proposition_vote
+        WHERE evenement_id = $1
+        ORDER BY id ASC
+    `;
+
+    const values = [idEvenement];
+    const result = await pool.query(query, values);
+
+    return result.rows;
+};
+
+
+export const creerProposition = async (idEvenement, type, valeur) => {
+    const query = `
+        INSERT INTO proposition_vote (evenement_id, type, valeur)
+        VALUES ($1, $2, $3)
+        RETURNING id, type, valeur, nb_votes, evenement_id
+    `;
+
+    const values = [idEvenement, type, valeur];
+    const result = await pool.query(query, values);
+
+    return result.rows[0];
+};
+
+
+export const voterPourProposition = async (idProposition) => {
+    const query = `
+        UPDATE proposition_vote
+        SET nb_votes = nb_votes + 1
+        WHERE id = $1
+        RETURNING id, type, valeur, nb_votes, evenement_id
+    `;
+
+    const values = [idProposition];
+    const result = await pool.query(query, values);
+
+    return result.rows[0];
+};
+
+
+export const definirChoixFinal = async (idEvenement, statusFinal) => {
+    const query = `
+        UPDATE evenement
+        SET status_final = $1
+        WHERE id = $2
+        RETURNING id, titre, date, lieu, status_final,
+                  utilisateur_id, groupe_id
+    `;
+
+    const values = [statusFinal, idEvenement];
+    const result = await pool.query(query, values);
+
+    return result.rows[0];
+};
