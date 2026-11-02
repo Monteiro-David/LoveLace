@@ -4,7 +4,10 @@ import cors from "cors";
 import testRoutes from "./Routes/testRoutes.js";
 import utilisateurRoutes from "./Routes/utilisateurRoutes.js";
 import authRoutes from "./Routes/authRoutes.js";
+import groupeRoutes from "./Routes/groupeRoutes.js";
 import evenementRoutes from "./Routes/evenementRoutes.js";
+import invitationRoutes from "./Routes/invitationRoutes.js";
+import propositionRoutes from "./Routes/propositionRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -12,10 +15,12 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/test", testRoutes);
+app.use("/api/groupe", groupeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/utilisateurs", utilisateurRoutes);
 app.use("/api/evenements", evenementRoutes);
-
+app.use("/api/invitations", invitationRoutes);
+app.use("/api/propositions", propositionRoutes);
 
 app.get("/", (req, res) => {
   res.send("Bienvenue sur l'API de LoveLace !");

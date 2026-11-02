@@ -117,12 +117,3 @@ Créez une branche dédiée par fonctionnalité : git checkout -b feature/VotreN
 Suivez la convention Conventional Commits pour vos messages (ex: feat(auth): ajout du formulaire de connexion, fix(db): correction de contrainte).
 
 Ouvrez une Pull Request sur GitHub pour validation avant fusion sur master / main.
-
-
-
-
-
-
-
-
-

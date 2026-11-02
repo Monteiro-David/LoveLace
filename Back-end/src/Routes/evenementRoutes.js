@@ -1,36 +1,25 @@
-import {Router} from "express";
-import {pool} from "../config/db.js";
+import { Router } from "express";
+import { 
+ getEvenements, postEvenement, getEvenementParId,
+putEvenement, deleteEvenement, getPropositionsEvenement,
+postPropositionEvenement, postChoixFinal} from "../controllers/evenementController.js";
+import { postInvitation } from "../controllers/invitationController.js";
+
 
 const router = Router();
 
-router.get("/", async (req, res) => {
-    try {
-        // identifiant temporaire pour tester la route
-        const idUtilisateur = 1;
+router.get("/", getEvenements);
+router.post("/", postEvenement);
 
-        const resultats = await pool.query(
-            `SELECT
-            id,
-            titre,
-            date,
-            lieu,
-            description,
-            categorie,
-            status_final,
-            groupe_id
-            FROM Evenement
-            WHERE utilisateur_id = $1`,
-            [idUtilisateur]
-        );
-        res.status(200).json(resultats.rows);
-    } catch (error) {
-        console.error("Erreur lors de la recuperation des evenements :", error);
+router.get("/:id_evenement", getEvenementParId);
+router.put("/:id_evenement", putEvenement);
+router.delete("/:id_evenement", deleteEvenement);
 
-        res.status(500).json({
-            success: false,
-            message: "Erreur lors de la recuperation des evenements"
-        });
-    }
-});
+router.post("/:id_evenement/invitations", postInvitation);
+
+router.get("/:id_evenement/propositions", getPropositionsEvenement);
+router.post("/:id_evenement/propositions", postPropositionEvenement);
+
+router.post("/:id_evenement/choix-final", postChoixFinal);
 
 export default router;
