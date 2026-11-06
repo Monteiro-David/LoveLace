@@ -1,0 +1,56 @@
+### Variables d'environnement pour les tests
+@baseUrl = http://localhost:3000/api/auth
+
+### 1. Inscription d'un nouvel utilisateur (Cas valide -> 201)
+POST {{baseUrl}}/inscription
+Content-Type: application/json
+
+{
+  "nom": "Dupont",
+  "prenom": "Jean",
+  "pseudo": "jeandupont",
+  "email": "jean.dupont@example.com",
+  "mot_de_passe": "MonMotDePasseSecurise123"
+}
+
+### 2. Inscription avec des données invalides (Cas 422 - Champs vides ou trop courts)
+POST {{baseUrl}}/inscription
+Content-Type: application/json
+
+{
+  "nom": "A",
+  "prenom": "",
+  "pseudo": "ab",
+  "email": "email-invalide",
+  "mot_de_passe": "1234"
+}
+
+### 3. Inscription avec un email déjà utilisé (Cas 409 - Doublon)
+POST {{baseUrl}}/inscription
+Content-Type: application/json
+
+{
+  "nom": "Durand",
+  "prenom": "Marie",
+  "pseudo": "mariedurand",
+  "email": "jean.dupont@example.com",
+  "mot_de_passe": "AutreMotDePasse123"
+}
+
+### 4. Connexion réussie (Cas 200)
+POST {{baseUrl}}/connexion
+Content-Type: application/json
+
+{
+  "email": "jean.dupont@example.com",
+  "mot_de_passe": "MonMotDePasseSecurise123"
+}
+
+### 5. Échec de connexion (Mot de passe incorrect -> 401)
+POST {{baseUrl}}/connexion
+Content-Type: application/json
+
+{
+  "email": "jean.dupont@example.com",
+  "mot_de_passe": "MauvaisMotDePasse"
+}
