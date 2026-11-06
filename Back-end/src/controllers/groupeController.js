@@ -1,10 +1,10 @@
 import * as groupeService from "../services/groupeService.js";
 
-export const getListeGroupeController = async (req, res) => {
+export const ListeGroupeController = async (req, res) => {
       try {
         const { utilisateur_id } = req.query;
        
-        const listeGroupe = await groupeService.getListeGroupeService(utilisateur_id);
+        const listeGroupe = await groupeService.ListeGroupeService(utilisateur_id);
 
         return res.status(200).json({ 
             success: true,
@@ -26,7 +26,7 @@ export const CreerGroupeController = async (req, res) => {
         const nouveauGroupe = await groupeService.CreerGroupeService(titre, description, utilisateur_id);
         return res.status(201).json({
             success: true,
-            message: "Groupe créé avec succès",
+            message: "Groupe créé avec succès et créateur ajouté comme admin avec succès",
             data: nouveauGroupe
         });
     
@@ -35,14 +35,15 @@ export const CreerGroupeController = async (req, res) => {
         const statusCode = error.status || 500;
         return res.status(statusCode).json({ 
             success: false,
-            message: error.message ||  "Erreur lors de la création du groupe" });
+            message: error.message ||  "Erreur lors de la création du groupe" 
+        });
       } 
 };
 
-export const getDetailGroupeController = async (req, res) => {
+export const DetailGroupeController = async (req, res) => {
      try {
         const { groupe_id } = req.params;
-        const detailGroupe = await groupeService.getDetailGroupeService(groupe_id);
+        const detailGroupe = await groupeService.DetailGroupeService(groupe_id);
         return res.status(200).json({
           success: true,
           data: detailGroupe
@@ -79,7 +80,7 @@ export const ModifierGroupeController = async (req,res) => {
 export const SupprimerGroupeController = async (req, res) => {
       try {
         const { groupe_id } = req.params;
-        const groupeSupprimer = await groupeService.SupprimerGroupeSevice(groupe_id);
+        const groupeSupprimer = await groupeService.SupprimerGroupeService(groupe_id);
 
         return res.status(200).json({
           success: true,

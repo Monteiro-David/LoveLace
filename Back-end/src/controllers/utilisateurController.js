@@ -1,10 +1,10 @@
 import * as utilisateurService from "../services/utilisateurService.js";
 
-export const getProfilController = async (req, res) => {
+export const ProfilController = async (req, res) => {
   try {
     const { id } = req.params; 
 
-    const utilisateur = await utilisateurService.getUtilisateurService(id);
+    const utilisateur = await utilisateurService.UtilisateurService(id);
     return res.status(200).json({
       success: true,
       data: utilisateur
@@ -19,16 +19,16 @@ export const getProfilController = async (req, res) => {
   }
 };
 
-export const updateProfilController = async (req, res) => {
+export const modifierProfilController = async (req, res) => {
      try {
         const {id } = req.params;
         const { nom, prenom, pseudo, image_profil } = req.body;
 
-        const updatedUtilisateur = await utilisateurService.updateUtilisateurService(id, nom, prenom, pseudo, image_profil);
+        const modifierUtilisateur = await utilisateurService.modifierUtilisateurService(id, nom, prenom, pseudo, image_profil);
             return res.status(200).json({
             success: true,
             message: "Profil mis à jour avec succès",
-            data: updatedUtilisateur
+            data: modifierUtilisateur
         });
     } catch (error) {
         console.error("Erreur à la base de données:", error);

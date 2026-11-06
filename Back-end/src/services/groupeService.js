@@ -1,7 +1,7 @@
 import * as groupeModel from "../models/groupeModels.js";
 
-export const getListeGroupeService = async (utilisateur_id) => {
-    const listeGroupe = await groupeModel.getListeGroupeById(utilisateur_id);
+export const ListeGroupeService = async (utilisateur_id) => {
+    const listeGroupe = await groupeModel.ListeGroupeParId(utilisateur_id);
     return listeGroupe;
 };
 
@@ -12,12 +12,12 @@ export const CreerGroupeService = async (titre, description, utilisateur_id) => 
         throw error;
     }
     
-    const nouveauGroupe = await groupeModel.CreerGroupeById(titre, description);
+    const nouveauGroupe = await groupeModel.CreerGroupeParId(titre, description,utilisateur_id);
     return nouveauGroupe;
 };
 
-export const getDetailGroupeService = async (groupe_id) => {
-    const detailGroupe = await groupeModel.getDetailGroupeById(groupe_id);
+export const DetailGroupeService = async (groupe_id) => {
+    const detailGroupe = await groupeModel.DetailGroupeParId(groupe_id);
     if (!detailGroupe) {
         const error = new Error("Groupe non trouvé");
         error.status = 404;
@@ -26,13 +26,13 @@ export const getDetailGroupeService = async (groupe_id) => {
     return detailGroupe;
 };
 
-export const ModifierGroupeService = async (titre, description, groupe_id) => {
+export const ModifierGroupeService = async (groupe_id, titre, description) => {
     if (!titre) {
         const error = new Error("Le titre est requis");
         error.status = 400;
         throw error;
     }
-    const groupeModifier = await groupeModel.ModifierGroupeById(groupe_id, titre, description);
+    const groupeModifier = await groupeModel.ModifierGroupeParId(groupe_id, titre, description);
     if (!groupeModifier) {
         const error = new Error("Groupe non trouvé")
         error.status = 404;
@@ -42,8 +42,8 @@ export const ModifierGroupeService = async (titre, description, groupe_id) => {
     return groupeModifier;
 };
 
-export const SupprimerGroupeSevice = async (groupe_id) => {
-    const groupeSupprimer = await groupeModel.SupprimerGroupeById(groupe_id);
+export const SupprimerGroupeService = async (groupe_id) => {
+    const groupeSupprimer = await groupeModel.SupprimerGroupeParId(groupe_id);
     if (!groupeSupprimer) {
         const error = new Error("Groupe non trouvé");
         error.status = 404
@@ -53,7 +53,7 @@ export const SupprimerGroupeSevice = async (groupe_id) => {
 };
 
 export const ListeMembreService = async (groupe_id) => {
-    const membres = await groupeModel.ListeMembreById(groupe_id);
+    const membres = await groupeModel.ListeMembreParId(groupe_id);
     if (!membres || membres.length === 0) {
         const error = new Error("Aucun membre trouvé pour ce groupe");
         error.status = 404
@@ -70,7 +70,7 @@ export const InviteMembreService = async (groupe_id, utilisateur_id) => {
     }
     
     try {
-        const invitation = await groupeModel.InviteMembreById(utilisateur_id, groupe_id );
+        const invitation = await groupeModel.InviteMembreParId(utilisateur_id, groupe_id );
         return invitation
         
     } catch (error) {
