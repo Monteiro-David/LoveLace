@@ -9,8 +9,7 @@ import {
 
 export const getEvenements = async (req, res) => {
     try {
-        // Identifiant temporaire pour tester la route.
-        const idUtilisateur = 1;
+        const idUtilisateur = req.utilisateur.id;
 
         const evenements = await listerEvenementsUtilisateur(idUtilisateur);
 
@@ -37,8 +36,7 @@ export const postEvenement = async (req, res) => {
             groupe_id
         } = req.body;
 
-        // Identifiant temporaire pour tester la création.
-        const utilisateur_id = 1;
+        const utilisateur_id = req.utilisateur.id;
 
         const evenement = await creerEvenementService(
             titre,
