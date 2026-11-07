@@ -1,56 +1,72 @@
-### Variables d'environnement pour les tests
-@baseUrl = http://localhost:3000/api/auth
+@baseUrl = http://localhost:3000/api
 
-### 1. Inscription d'un nouvel utilisateur (Cas valide -> 201)
-POST {{baseUrl}}/inscription
+### ==========================================
+### SECTION AUTHENTIFICATION
+### ==========================================
+
+### 1. Inscription d'un nouvel utilisateur
+POST {{baseUrl}}/auth/inscription
 Content-Type: application/json
 
 {
-  "nom": "Dupont",
-  "prenom": "Jean",
-  "pseudo": "jeandupont",
-  "email": "jean.dupont@example.com",
-  "mot_de_passe": "MonMotDePasseSecurise123"
+  "pseudo": "johndoe",
+  "email": "john.doe@example.com",
+  "mot_de_passe": "MonMotDePasse123"
 }
 
-### 2. Inscription avec des données invalides (Cas 422 - Champs vides ou trop courts)
-POST {{baseUrl}}/inscription
+### 2. Connexion (Le cookie 'token' est enregistré automatiquement par le client)
+POST {{baseUrl}}/auth/connexion
 Content-Type: application/json
 
 {
-  "nom": "A",
-  "prenom": "",
-  "pseudo": "ab",
-  "email": "email-invalide",
-  "mot_de_passe": "1234"
+  "email": "john.doe@example.com",
+  "mot_de_passe": "MonMotDePasse123"
 }
 
-### 3. Inscription avec un email déjà utilisé (Cas 409 - Doublon)
-POST {{baseUrl}}/inscription
+### 3. Récupérer le profil de l'utilisateur connecté (/moi)
+GET {{baseUrl}}/auth/moi
+
+
+### ==========================================
+### SECTION ÉVÉNEMENTS (Protégées par le cookie)
+### ==========================================
+
+### 4. Lister les événements de l'utilisateur connecté
+GET {{baseUrl}}/evenements
+
+### 5. Créer un nouvel événement
+POST {{baseUrl}}/evenements
 Content-Type: application/json
 
 {
-  "nom": "Durand",
-  "prenom": "Marie",
-  "pseudo": "mariedurand",
-  "email": "jean.dupont@example.com",
-  "mot_de_passe": "AutreMotDePasse123"
+  "titre": "Réunion de projet Express",
+  "date": "2026-06-15T10:00:00.000Z",
+  "lieu": "Bureau principal",
+  "description": "Point d'étape sur l'architecture MVC et les services",
+  "categorie": "Travail",
+  "groupe_id": null
 }
 
-### 4. Connexion réussie (Cas 200)
-POST {{baseUrl}}/connexion
+### 6. Récupérer un événement par son ID (remplace 1 par l'ID réel)
+GET {{baseUrl}}/evenements/1
+
+### 7. Modifier un événement (remplace 1 par l'ID réel)
+PUT {{baseUrl}}/evenements/1
 Content-Type: application/json
 
 {
-  "email": "jean.dupont@example.com",
-  "mot_de_passe": "MonMotDePasseSecurise123"
+  "date": "2026-06-16T14:00:00.000Z",
+  "lieu": "Salle de réunion B",
+  "status_final": "confirmé"
 }
 
-### 5. Échec de connexion (Mot de passe incorrect -> 401)
-POST {{baseUrl}}/connexion
-Content-Type: application/json
+### 8. Supprimer un événement (remplace 1 par l'ID réel)
+DELETE {{baseUrl}}/evenements/1
 
-{
-  "email": "jean.dupont@example.com",
-  "mot_de_passe": "MauvaisMotDePasse"
-}
+
+### ==========================================
+### DÉCONNEXION
+### ==========================================
+
+### 9. Déconnexion (Efface le cookie JWT du client)
+POST {{baseUrl}}/auth/deconnexion
