@@ -1,7 +1,7 @@
 import * as utilisateurModel from "../models/utilisateurModel.js";
 
 export const UtilisateurService = async (id) => {
-    const utilisateur = await utilisateurModel.getUtilisateurById(id);
+    const utilisateur = await utilisateurModel.UtilisateurParId(id);
     if (!utilisateur) {
         const error = new Error("Utilisateur non trouvé");
         error.status = 404;
@@ -16,7 +16,7 @@ export const modifierUtilisateurService = async (id, nom, prenom, pseudo, image_
         error.status = 400;
         throw error;
     }
-    const modifiedUtilisateur = await utilisateurModel.getUtilisateurById(id);
+    const modifiedUtilisateur = await utilisateurModel.modifierUtilisateurParId(id, nom, prenom, pseudo, image_profil);
     if (!modifiedUtilisateur) {
         const error = new Error("Utilisateur non trouvé");
         error.status = 404;

@@ -1,4 +1,4 @@
-import { ErreurHttp } from "../erreurs";
+import { ErreurHttp } from "../erreurs.js";
 
 export function gestionErreurs(err, req, res, next){
     if (err instanceof ErreurHttp){

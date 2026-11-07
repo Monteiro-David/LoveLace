@@ -27,3 +27,5 @@ app.get("/", (req, res) => {
 });
 
 app.use(gestionErreurs);
+
+export default app;

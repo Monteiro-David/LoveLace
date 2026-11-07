@@ -53,7 +53,7 @@ export const inscriptionControle = async (req, res) => {
           email: req.body.email.trim().toLowerCase(),
         }
 
-        const inscription = await authServices.inscriptionService({ donneesInscription }); 
+        const inscription = await authServices.inscriptionService(donneesInscription); 
     
         return res.status(201).json({
             success: true,
@@ -101,7 +101,7 @@ export const connexionControle = async (req, res) => {
 
 export const moiControle = async (req, res) => {
     try {
-        const utilisateur = await authServices.moiService(req.user.id);
+        const utilisateur = await authServices.moiService(req.utilisateur.id);
         return res.status(200).json({
             success: true,
             message: "Utilisateur récupéré avec succès",

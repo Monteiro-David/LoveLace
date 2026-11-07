@@ -1,4 +1,4 @@
-import { index } from './index.js';
+import app from './index.js';
 
 if (!process.env.JWT_SECRET){
     console.error('JWT_SECRET  manquant : copie .env.exemple en .env et définissez JWT_SECRET');
@@ -7,6 +7,6 @@ if (!process.env.JWT_SECRET){
 }
 
 const PORT = process.env.PORT || 3000;
-index.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });

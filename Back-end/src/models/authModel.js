@@ -31,16 +31,13 @@ export const connexionParId = async (id) => {
     return result.rows[0] ?? null;
 }
 
-export const deconnexion = async (id) => {
-    const query = `DELETE FROM utilisateur WHERE id = $1`;
-    const values = [id];
-    await pool.query(query, values);
-    return { message: "Utilisateur déconnecté avec succès" };
-}
-
 export const moi = async (id) => {
     const query = `SELECT ${COLONNES_PUBLIQUES} FROM utilisateur WHERE id = $1`;
     const values = [id];
     const result = await pool.query(query, values);
     return result.rows[0] ?? null;
+}
+
+export const deconnexion = async (id) => {
+    return { message: "Utilisateur déconnecté avec succès" };
 }
