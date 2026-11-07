@@ -8,7 +8,7 @@ export function auth(req, res, next){
     }
     try {
         const contenu = jwt.verify(token, process.env.JWT_SECRET);
-        req.utlisateur = {id: contenu.id, pseudo: contenu.pseudo, email: contenu.email};
+        req.utilisateur = {id: contenu.id, pseudo: contenu.pseudo, email: contenu.email};
         next();
     } catch (err) {
         throw new ErreurHttp(401, 'Session expirée ou invalide');

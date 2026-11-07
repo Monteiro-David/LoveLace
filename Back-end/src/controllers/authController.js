@@ -97,4 +97,43 @@ export const connexionControle = async (req, res) => {
             message: error.message || "Erreur lors de la connexion"
         });
       }
-}
+};
+
+export const moiControle = async (req, res) => {
+    try {
+        const utilisateur = await authServices.moiService(req.user.id);
+        return res.status(200).json({
+            success: true,
+            message: "Utilisateur récupéré avec succès",
+            data: utilisateur
+        });
+    } catch (error) {
+        const statusCode = error.status || 500;
+        return res.status(statusCode).json({
+            success: false,
+            message: error.message || "Erreur lors de la récupération de l'utilisateur"
+        });
+    }
+};
+
+export const deconnexionControle = async (req, res) => {
+    try {
+        await authServices.deconnexionService();
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Déconnexion réussie"
+        });
+    } catch (error) {
+        const statusCode = error.status || 500;
+        return res.status(statusCode).json({
+            success: false,
+            message: error.message || "Erreur lors de la déconnexion"
+        });
+    }
+};
