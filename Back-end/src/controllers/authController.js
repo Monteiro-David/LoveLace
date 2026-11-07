@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import * as authServices from "../services/authServices.js";
 
 
@@ -83,6 +84,19 @@ export const connexionControle = async (req, res) => {
         const {email, mot_de_passe } = req.body
         const connexion = await authServices.connexionService({email, mot_de_passe});
 
+
+        const token = jwt.sign(
+            { id: utilisateur.id, pseudo: utilisateur.pseudo, email: utilisateur.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000 
+        });        
     
         return res.status(200).json({
           success: true,

@@ -1,7 +1,10 @@
 import express from "express";
 import * as groupeController from "../controllers/groupeController.js";
+import { auth } from "../middlewares/auth.js";
 
 const router = express.Router();
+
+router.use(auth);
 
 router.get("/", groupeController.ListeGroupeController);
 router.post("/", groupeController.CreerGroupeController);

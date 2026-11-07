@@ -21,7 +21,9 @@ export const ListeGroupeController = async (req, res) => {
 
 export const CreerGroupeController = async (req, res) => {
       try {
-        const { titre, description, utilisateur_id } = req.body;
+        const { titre, description} = req.body;
+
+        const utilisateur_id =req.utilisateur.id;
         
         const nouveauGroupe = await groupeService.CreerGroupeService(titre, description, utilisateur_id);
         return res.status(201).json({
