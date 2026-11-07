@@ -1,6 +1,6 @@
 import {pool} from "../config/db.js";
 
-export const getListeGroupeById = async (utilisateur_id) => {
+export const ListeGroupeParId = async (utilisateur_id) => {
     let query = `SELECT * from groupe`;
     let values = [];
 
@@ -19,24 +19,30 @@ export const getListeGroupeById = async (utilisateur_id) => {
     return result.rows;
 }
 
-export const CreerGroupeById = async (titre, description) => { 
-      const query = `INSERT INTO groupe (titre, description, date_creation)
+export const CreerGroupeParId = async (titre, description,utilisateur_id) => { 
+      const groupeQuery = `INSERT INTO groupe (titre, description, date_creation)
       VALUES ($1, $2, NOW())
       RETURNING id, titre, description, date_creation
       `;
-      const values = [titre, description || null];
-      const result = await pool.query(query, values);
-      return result.rows[0];
+      const groupeResult = await pool.query(groupeQuery, [titre, description || null]);
+      const nouveauGroupe = groupeResult.rows[0];
+
+      const membreQuery =`
+      INSERT INTO utilisateur_groupe (utilisateur_id, groupe_id, role, date_adhesion)
+      VALUES ($1,$2, 'admin', NOW())
+      `;
+      await pool.query(membreQuery, [utilisateur_id, nouveauGroupe.id]);
+      return nouveauGroupe;
 }
 
-export const getDetailGroupeById = async (groupe_id) => {
+export const DetailGroupeParId = async (groupe_id) => {
     const query = `SELECT * FROM groupe WHERE id = $1`;
     const values = [groupe_id];
     const result = await pool.query(query, values);
     return result.rows[0];
 }
 
-export const ModifierGroupeById = async ( titre, description, groupe_id) => {
+export const ModifierGroupeParId = async ( groupe_id, titre, description) => {
       const query = `
       UPDATE groupe 
       SET titre = $1, description = $2 
@@ -48,14 +54,14 @@ export const ModifierGroupeById = async ( titre, description, groupe_id) => {
       return result.rows[0];
 }
 
-export const SupprimerGroupeById = async (groupe_id) => {
+export const SupprimerGroupeParId = async (groupe_id) => {
       const query = `DELETE FROM groupe WHERE id = $1 RETURNING *`;
       const values = [groupe_id];
       const result = await pool.query(query, values);
       return result.rows[0];
 }
 
-export const ListeMembreById = async (groupe_id) => {
+export const ListeMembreParId = async (groupe_id) => {
       const query = `
       SELECT u.id, u.nom, u.prenom, u.pseudo, u.email, ug.role 
       FROM utilisateur u
@@ -67,10 +73,10 @@ export const ListeMembreById = async (groupe_id) => {
       return result.rows;
 }
 
-export const InviteMembreById = async (utilisateur_id, groupe_id) => {
+export const InviteMembreParId = async (utilisateur_id, groupe_id) => {
       const query = `
-      INSERT INTO utilisateur_groupe (utilisateur_id, groupe_id) 
-      VALUES ($1, $2) 
+      INSERT INTO utilisateur_groupe (utilisateur_id, groupe_id, role, date_adhesion) 
+      VALUES ($1, $2, 'membre', NOW()) 
       RETURNING *
       `;
       const values = [utilisateur_id, groupe_id];
@@ -78,7 +84,7 @@ export const InviteMembreById = async (utilisateur_id, groupe_id) => {
       return result.rows[0];
 }
 
-export const ModifierRoleMembreById = async (groupe_id, utilisateur_id, role) => {
+export const ModifierRoleMembreParId = async (groupe_id, utilisateur_id, role) => {
         const query = `
         UPDATE utilisateur_groupe 
         SET role = $1 
@@ -90,7 +96,7 @@ export const ModifierRoleMembreById = async (groupe_id, utilisateur_id, role) =>
         return result.rows[0];
 }
 
-export const QuitterGroupeById =  async (groupe_id, utilisateur_id) => {
+export const QuitterGroupeParId =  async (groupe_id, utilisateur_id) => {
         const query = `DELETE FROM utilisateur_groupe WHERE groupe_id = $1 AND utilisateur_id = $2 RETURNING *`;
         const values = [groupe_id, utilisateur_id];
         const result = await pool.query(query, values);

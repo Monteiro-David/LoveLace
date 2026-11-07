@@ -1,0 +1,72 @@
+@baseUrl = http://localhost:3000/api
+
+### ==========================================
+### SECTION AUTHENTIFICATION
+### ==========================================
+
+### 1. Inscription d'un nouvel utilisateur
+POST {{baseUrl}}/auth/inscription
+Content-Type: application/json
+
+{
+  "pseudo": "johndoe",
+  "email": "john.doe@example.com",
+  "mot_de_passe": "MonMotDePasse123"
+}
+
+### 2. Connexion (Le cookie 'token' est enregistré automatiquement par le client)
+POST {{baseUrl}}/auth/connexion
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "mot_de_passe": "MonMotDePasse123"
+}
+
+### 3. Récupérer le profil de l'utilisateur connecté (/moi)
+GET {{baseUrl}}/auth/moi
+
+
+### ==========================================
+### SECTION ÉVÉNEMENTS (Protégées par le cookie)
+### ==========================================
+
+### 4. Lister les événements de l'utilisateur connecté
+GET {{baseUrl}}/evenements
+
+### 5. Créer un nouvel événement
+POST {{baseUrl}}/evenements
+Content-Type: application/json
+
+{
+  "titre": "Réunion de projet Express",
+  "date": "2026-06-15T10:00:00.000Z",
+  "lieu": "Bureau principal",
+  "description": "Point d'étape sur l'architecture MVC et les services",
+  "categorie": "Travail",
+  "groupe_id": null
+}
+
+### 6. Récupérer un événement par son ID (remplace 1 par l'ID réel)
+GET {{baseUrl}}/evenements/1
+
+### 7. Modifier un événement (remplace 1 par l'ID réel)
+PUT {{baseUrl}}/evenements/1
+Content-Type: application/json
+
+{
+  "date": "2026-06-16T14:00:00.000Z",
+  "lieu": "Salle de réunion B",
+  "status_final": "confirmé"
+}
+
+### 8. Supprimer un événement (remplace 1 par l'ID réel)
+DELETE {{baseUrl}}/evenements/1
+
+
+### ==========================================
+### DÉCONNEXION
+### ==========================================
+
+### 9. Déconnexion (Efface le cookie JWT du client)
+POST {{baseUrl}}/auth/deconnexion

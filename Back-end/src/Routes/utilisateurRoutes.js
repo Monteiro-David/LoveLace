@@ -1,10 +1,10 @@
 import  express  from "express";
-import  {getProfilController } from "../controllers/utilisateurController.js";
-import  {updateProfilController } from "../controllers/utilisateurController.js";
+import * as utilisateurController from "../controllers/utilisateurController.js";
+;
 
 const router = express.Router();
 
-router.get("/profil/:id", getProfilController);
-router.put("/profil/:id", updateProfilController);
+router.get("/profil/:id", utilisateurController.ProfilController);
+router.put("/profil/:id", utilisateurController.modifierProfilController);
 
 export default router;

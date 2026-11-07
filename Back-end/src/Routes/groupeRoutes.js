@@ -1,15 +1,15 @@
 import express from "express";
-import {getListeGroupeController, CreerGroupeController, getDetailGroupeController, ModifierGroupeController, SupprimerGroupeController, ListeMembreController, InviteMembreController, ModifierroleController, QuitterGroupeController} from "../controllers/groupeController.js";
+import * as groupeController from "../controllers/groupeController.js";
 
 const router = express.Router();
 
-router.get("/", getListeGroupeController);
-router.post("/", CreerGroupeController);
-router.get("/:id_groupe", getDetailGroupeController);
-router.put("/:id_groupe", ModifierGroupeController);
-router.delete("/:id_groupe", SupprimerGroupeController);
-router.get("/:id_groupe/membres", ListeMembreController);
-router.post("/:id_groupe/invitations", InviteMembreController);
-router.put("/:id_groupe/membres/:id_utilisateur", ModifierroleController);
-router.delete("/:id_groupe/membres/:id_utilisateur", QuitterGroupeController);
+router.get("/", groupeController.ListeGroupeController);
+router.post("/", groupeController.CreerGroupeController);
+router.get("/:groupe_id", groupeController.DetailGroupeController);
+router.put("/:groupe_id", groupeController.ModifierGroupeController);
+router.delete("/:groupe_id", groupeController.SupprimerGroupeController);
+router.get("/:groupe_id/membres", groupeController.ListeMembreController);
+router.post("/:groupe_id/invitations", groupeController.InviteMembreController);
+router.put("/:groupe_id/membres/:utilisateur_id", groupeController.ModifierroleController);
+router.delete("/:groupe_id/membres/:utilisateur_id", groupeController.QuitterGroupeController);
 export default router;
