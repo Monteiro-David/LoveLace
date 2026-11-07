@@ -89,7 +89,7 @@ export const ModifierRoleMembreService = async (groupe_id, utilisateur_id, role)
         error.status = 400;
         throw error;
     }
-    const roleMembre = await groupeModel.ModifierRoleMembreById(groupe_id, utilisateur_id, role);
+    const roleMembre = await groupeModel.ModifierRoleMembreParId(groupe_id, utilisateur_id, role);
     if (!roleMembre) {
         const error = new Error("Association groupe-utilisateur non trouvée");
         error.status = 404
@@ -99,7 +99,7 @@ export const ModifierRoleMembreService = async (groupe_id, utilisateur_id, role)
 }
 
 export const QuitterGroupeService = async (groupe_id, utilisateur_id) => {
-    const supprime = await groupeModel.QuitterGroupeById(groupe_id, utilisateur_id);    
+    const supprime = await groupeModel.QuitterGroupeParId(groupe_id, utilisateur_id);    
     if (!supprime) {
         const error = new Error("Membre non trouvé dans le groupe");
         error.status = 404;
