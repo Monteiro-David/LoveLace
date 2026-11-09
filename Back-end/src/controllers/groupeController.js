@@ -2,7 +2,7 @@ import * as groupeService from "../services/groupeService.js";
 
 export const ListeGroupeController = async (req, res) => {
       try {
-        const { utilisateur_id } = req.query;
+        const utilisateur_id  = req.utilisateur.id;
        
         const listeGroupe = await groupeService.ListeGroupeService(utilisateur_id);
 

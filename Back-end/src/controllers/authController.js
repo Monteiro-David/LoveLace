@@ -69,20 +69,25 @@ export const inscriptionControle = async (req, res) => {
                 success: false,
                 message: "L'email ou le pseudo est déjà utilisé"
             });
-        }
-        const statusCode = error.status || 500;
-        return res.status(statusCode).json({ 
+          }
+          const statusCode = error.status || 500;
+          return res.status(statusCode).json({ 
             success: false,
             message: error.message || "Erreur lors de l'inscription "
-        });
-      }
-    
-};
-
+          });
+        }
+        
+      };
+      
+const optionsCookie = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', 
+  sameSite: 'strict'
+}
 export const connexionControle = async (req, res) => {
       try {
         const {email, mot_de_passe } = req.body
-        const connexion = await authServices.connexionService({email, mot_de_passe});
+        const utilisateur = await authServices.connexionService({email, mot_de_passe});
 
 
         const token = jwt.sign(
@@ -90,13 +95,9 @@ export const connexionControle = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );
+        
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000 
-        });        
+        res.cookie('token', token, { ...optionsCookie, maxAge: 7 * 24 * 60 * 60 * 1000 });        
     
         return res.status(200).json({
           success: true,
@@ -104,7 +105,7 @@ export const connexionControle = async (req, res) => {
           data: connexion
         });
       } catch (error) {
-        console.error("Erreur à la base de données:", error);
+        console.error("Erreur lors de la connexion:", error);
         const statusCode = error.status || 500;
         return res.status(statusCode).json({ 
             success: false,
@@ -132,12 +133,8 @@ export const moiControle = async (req, res) => {
 
 export const deconnexionControle = async (req, res) => {
     try {
-        await authServices.deconnexionService();
-        res.clearCookie('token', {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict'
-        });
+        await authServices.deconnexionService(req.utilisateur.id);
+        res.clearCookie('token', optionsCookie);
 
         return res.status(200).json({
             success: true,

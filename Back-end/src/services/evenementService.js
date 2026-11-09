@@ -1,6 +1,6 @@
 
 import * as evenementModel from "../models/evenementModel.js";
-import { ErreurHttp } from "../utils/erreur.js";
+import { ErreurHttp } from "../erreurs.js";
 
 
 export const listerEvenementsUtilisateur = async (idUtilisateur) => {

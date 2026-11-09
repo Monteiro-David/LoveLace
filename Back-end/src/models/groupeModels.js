@@ -102,3 +102,10 @@ export const QuitterGroupeParId =  async (groupe_id, utilisateur_id) => {
         const result = await pool.query(query, values);
         return result.rows[0];
 }
+
+export const RoleMembreParId = async (groupe_id, utilisateur_id) => {
+      const query = `SELECT role FROM utilisateur_groupe WHERE groupe_id =$1 AND utilisateur_id = $2`;
+      const value = [groupe_id, utilisateur_id]
+      const result = await pool.query(query, value)
+      return result.rows[0]?.role;
+}
