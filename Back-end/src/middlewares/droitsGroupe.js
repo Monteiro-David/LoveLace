@@ -1,4 +1,4 @@
-import * as groupeModel from "../models/groupeModel.js";
+import * as groupeModel from "../models/groupeModels.js";
 import {ErreurHttp} from "../erreurs.js"
 
 export const estMembre = async (req, res, next) => {
