@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import * as authModel from "../models/authModel.js"
-import { ErreurHttp } from "../utils/erreur.js";
+import { ErreurHttp } from "../erreur.js";
 
 export const inscriptionService = async (données) => {
     const {nom, prenom, pseudo, email, mot_de_passe } = données;
