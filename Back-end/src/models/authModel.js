@@ -10,7 +10,7 @@ export const inscription = async (nom, prenom, pseudo, email, mot_de_passe) => {
 
     const values = [nom, prenom, pseudo, email, mot_de_passe];
     const result = await pool.query(query, values);
-    return result.rows[0];
+    return result.rows[0] ?? null;
 };
 
 export const connexionParEmail = async (email) => {
