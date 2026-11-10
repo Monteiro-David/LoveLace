@@ -40,14 +40,19 @@ export const modifierEvenementService = async (idEvenement, date, lieu, status_f
     if (!idEvenement) {
         throw new ErreurHttp(400, "L'ID de l'événement est requis");
     }
-    if (!date || !lieu || !status_final) {
-        throw new ErreurHttp(400, "Tous les champs sont requis");
+
+    const evenementExistant = await evenementModel.getEvenementParId(idEvenement);
+    if (!evenementExistant) {
+        throw new ErreurHttp(404, "Événement non trouvé");
     }
-    if (new Date(date) < new Date()) {
+    const dateAUtiliser = date !== undefined && date !== null && date !== "" ? date : evenementExistant.date;
+    const lieuAUtiliser = lieu !== undefined && lieu !== null && lieu !== "" ? lieu : evenementExistant.lieu;
+    const statutAUtiliser = status_final !== undefined && status_final !== null && status_final !== "" ? status_final : evenementExistant.status_final;
+    if (new Date(dateAUtiliser) < new Date()) {
         throw new ErreurHttp(400, "La date de l'événement ne peut pas être dans le passé");
     }
-    const evenement = await evenementModel.modifierEvenement(idEvenement, date, lieu, status_final);
-    return evenement;
+    const evenementModifier = await evenementModel.modifierEvenement(idEvenement, dateAUtiliser, lieuAUtiliser, statutAUtiliser);
+    return evenementModifier;
 };
 
 export const supprimerEvenementService = async (idEvenement) => {

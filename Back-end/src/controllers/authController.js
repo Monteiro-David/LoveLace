@@ -102,7 +102,7 @@ export const connexionControle = async (req, res) => {
         return res.status(200).json({
           success: true,
           message: "Connexion réussie",
-          data: connexion
+          data: utilisateur
         });
       } catch (error) {
         console.error("Erreur lors de la connexion:", error);

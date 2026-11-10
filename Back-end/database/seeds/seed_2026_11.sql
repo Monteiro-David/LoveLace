@@ -1,0 +1,1 @@
+SELECT setval('evenement_id_seq', (SELECT MAX(id) FROM evenement));
