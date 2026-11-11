@@ -1,12 +1,14 @@
-import app from './index.js';
+import app from "./index.js";
+import "dotenv/config";
 
-if (!process.env.JWT_SECRET){
-    console.error('JWT_SECRET  manquant : copie .env.exemple en .env et définissez JWT_SECRET');
-    process.exit(1);
-    
+if (!process.env.JWT_SECRET) {
+  console.error(
+    "JWT_SECRET  manquant : copie .env.exemple en .env et définissez JWT_SECRET",
+  );
+  process.exit(1);
 }
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
