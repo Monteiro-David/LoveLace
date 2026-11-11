@@ -9,20 +9,23 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         api.recpererMoi()
-            .then((donnees) => setUtilisateur(donnees.utilisateur))
+            .then((donnees) => setUtilisateur(donnees.data))
             .catch(() => setUtilisateur(null))
             .finally(() => setChargement(false));
     }, []);
 
     const seConnecter = async (identifiants) => {
         const donnees = await api.connecter(identifiants);
-        setUtilisateur(donnees.utilisateur);
+        setUtilisateur(donnees.data);
     };
 
     const seDeconnecter = async () => {
-        await api.deconnecter();
-        setUtilisateur(null);
-    }
+        try {
+            await api.deconnecter();
+        } finally {
+            setUtilisateur(null);
+        }
+    };
 
     return (
         <AuthContext.Provider value={{ utilisateur, chargement, seConnecter, seDeconnecter }}>

@@ -17,9 +17,9 @@ async function appeler(chemin, option = {} ) {
 export const inscrire = (infos) => 
     appeler('/inscription', { method: 'POST', body: JSON.stringify(infos) });
 
-export const connecter = (identfiants) =>
-    appeler('/connexion', { method: 'POST', body: JSON.stringify(identfiants) });
+export const connecter = (identifiants) =>
+    appeler('/connexion', { method: 'POST', body: JSON.stringify(identifiants) });
 
 export const deconnecter = () => appeler('/deconnexion', {method: 'POST'});
 
-export const recpererMoi = () => appeler('/moi');
+export const recupererMoi = () => appeler('/moi');
