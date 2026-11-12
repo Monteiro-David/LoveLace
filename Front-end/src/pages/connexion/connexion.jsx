@@ -1,4 +1,4 @@
-import "./Connexion.css";
+import "./connexion.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
