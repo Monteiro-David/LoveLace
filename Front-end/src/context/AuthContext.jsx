@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) => {
     const [chargement, setChargement] = useState(true);
 
     useEffect(() => {
-        api.recpererMoi()
+        api.recupererMoi()
             .then((donnees) => setUtilisateur(donnees.data))
             .catch(() => setUtilisateur(null))
             .finally(() => setChargement(false));

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Connexion from "./pages/connexion.jsx";
+import Connexion from "./pages/connexion/connexion.jsx";
 import Inscription from "./pages/inscription/inscription.jsx";
 function App() {
   return (
