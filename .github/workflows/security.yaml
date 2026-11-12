@@ -1,0 +1,13 @@
+name: securite
+on:
+  schedule:
+    - cron: "0 12 * * *" #0: minutes; 12: l'heure de demarage; *jour du mois, mois de l'annee et la derniere jour de la semaine
+jobs:
+  node-audit:
+    name: "audit node"
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+      - name: audit dependance de node
+        run: npm audit
