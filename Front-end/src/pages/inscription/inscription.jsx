@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { inscrire } from "../../api/auth";
 import "./inscription.css";
 
 const Inscription = () => {
@@ -7,27 +8,35 @@ const Inscription = () => {
 
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
+  const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPasseword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [erreur, setErreur] = useState("");
 
-  const gererInscription = (event) => {
+  const gererInscription = async (event) => {
     event.preventDefault();
     setErreur("");
+
     if (password !== confirmation) {
       setErreur("Le mot de passe ne correspond pas");
       return;
     }
-    setErreur("");
-    console.log("Formulaire envoyee");
+    
     const utilisateur = {
       nom,
       prenom,
+      pseudo,
       email,
       mot_de_passe: password,
     };
-    console.log("Formulaire d'inscription valide");
+
+    try {
+      await inscrire(utilisateur)
+      console.log("Formulaire d'inscription valide");
+    } catch (err) {
+      setErreur(err.message || "Erreur lors de l'inscription");
+    }
   };
 
   const gererConnexion = () => {
@@ -36,8 +45,9 @@ const Inscription = () => {
 
   return (
     <main>
-      <h1>Bienvenue sur Lovelace Factory !</h1>
+      <h1> Inscription</h1>
       <p>Inscris toi pour créer des événements avec tes proches.</p>
+
       <form onSubmit={gererInscription}>
         <label htmlFor="nom">Nom</label>
         <input
@@ -57,6 +67,16 @@ const Inscription = () => {
           value={prenom}
           onChange={(event) => setPrenom(event.target.value)}
           required
+        />
+
+        <label htmlFor="pseudo">Pseudo</label>
+        <input 
+        type="texte"
+        id="pseudo"
+        placeholder="Entrez votre pseudo"
+        value={pseudo}
+        onChange={(event) => setPseudo(event.target.value)}
+        required
         />
 
         <label htmlFor="email">Adresse e-mail</label>
@@ -89,11 +109,11 @@ const Inscription = () => {
           required
         />
 
-        {erreur && <p role="alerte"> {erreur}</p>}
+        {erreur && <p style={{color: "red"}} role="alerte"> {erreur}</p>}
 
         <button type="submit">S'inscrire</button>
       </form>
-
+      <p>Déja un compte ?</p>
       <button type="button" onClick={gererConnexion}>
         Se connecter
       </button>
