@@ -21,7 +21,7 @@ const Connexion = () => {
             await seConnecter({email, mot_de_passe: password});
 
             console.log("Connexion réussie");
-            navigate(); // ajouter la page d'accueil
+            navigate("/tableau-de-bord"); 
         } catch (err) {
             setErreur(err.message || "Erreur lors de la connexion")
         }
@@ -33,7 +33,7 @@ const Connexion = () => {
 
     return (
         <main>
-            <h1>Bienvenue sur Lovelace Factory !</h1>
+            <h1>Bienvenue sur Joya</h1>
             <p>Connecte-toi pour créer des événements avec tes proches.</p>
 
             {erreur && <p style={{color: "red"}} role="alert">{erreur}</p>}
