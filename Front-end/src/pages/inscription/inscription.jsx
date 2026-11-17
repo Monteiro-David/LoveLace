@@ -19,7 +19,7 @@ const Inscription = () => {
     setErreur("");
 
     if (password !== confirmation) {
-      setErreur("Le mot de passe ne correspond pas");
+      setErreur({confirmation: "Le mot de passe ne correspond pas"});
       return;
     }
     
@@ -34,13 +34,14 @@ const Inscription = () => {
     try {
       await inscrire(utilisateur)
       console.log("Formulaire d'inscription valide");
+      navigate("/", {state: {inscription_reussie: true}});
     } catch (err) {
       setErreur(err.message || "Erreur lors de l'inscription");
     }
   };
 
   const gererConnexion = () => {
-    navigate("./connexion");
+    navigate("/");
   };
 
   return (
@@ -51,7 +52,7 @@ const Inscription = () => {
       <form onSubmit={gererInscription}>
         <label htmlFor="nom">Nom</label>
         <input
-          type="texte"
+          type="text"
           id="nom"
           placeholder="Entrez votre nom"
           value={nom}
