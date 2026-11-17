@@ -1,0 +1,92 @@
+/* Conteneur global */
+div {
+    font-family: Arial, sans-serif;
+}
+
+/* Panneau latéral fixe à gauche */
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e6e0f0;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.04);
+    z-index: 10;
+}
+
+aside h1 {
+    color: #7654a8;
+    font-size: 24px;
+    margin: 0 0 30px 0;
+}
+
+aside nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+aside nav li {
+    margin-bottom: 10px;
+}
+
+aside nav a {
+    display: block;
+    padding: 12px 15px;
+    color: #555555;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+aside nav a:hover {
+    background-color: #f3eefb;
+    color: #7654a8;
+}
+
+/* Barre de navigation supérieure (le header situé après l'aside) */
+aside + header {
+    margin-left: 240px;
+    height: 70px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e6e0f0;
+    padding: 0 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+aside + header div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+aside + header span {
+    color: #555555;
+    font-size: 15px;
+}
+
+aside + header strong {
+    color: #7654a8;
+}
+
+aside + header button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #7654a8;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+aside + header button:hover {
+    background-color: #5e408b;
+}
