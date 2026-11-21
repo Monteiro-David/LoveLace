@@ -5,6 +5,27 @@ jobs:
   test:
     runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-      - run: npm ci
+      - name: Check du dépôt
+        uses: actions/checkout@v7
+
+      - name: Configurer Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: |
+            Back-end/package-lock.js
+            Front-end/package-lock.js
+
+      - name: Installer et tester le Back-end
+        working-directory: Back-end
+        run: |
+          npm ci
+          npm test --if-present
+
+      - name: Installer, linter et builder le Front-end
+        working-directory: Front-end
+        run: |
+          npm ci
+          npm run lint --if-present
+          npm run build
