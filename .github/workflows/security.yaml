@@ -8,7 +8,16 @@ jobs:
     name: "audit node"
     runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-      - name: audit dependance de node
-        run: npm audit
+      - name: Check du dépôt 
+        uses: actions/checkout@v7
+        
+      - name: Configurer Node.js
+        uses: actions/setup-node@v7
+
+      - name: Audit dependances Back-end
+        working-directory: Back-end
+        run: npm audit --audit-level=high
+
+      - name: Audit dépendancs Front-end
+        working-directory: Front-end
+        run: npm audit ---audit-level=high
