@@ -1,6 +1,7 @@
-# Joya - Back-end API
+# Joya 
 
 Joya est une application web collaborative de gestion d'événements. Elle permet de créer des groupes d'utilisateurs, d'organiser des événements.
+
 
 ##  Table des matières
 
@@ -173,27 +174,31 @@ back-end/
 ###  Test
 
 | Méthode | Endpoint | Description | 
-| `GET` | `/api/test/test-db` | Vérifie la connexion à PostgreSQL | 
+
+| `GET` | `/api/test/test-db` | Vérifie la connexion à PostgreSQL |
 
 ###  Authentification (`/api/auth`)
 
-| Méthode | Endpoint | Description |
-| `POST` | `/api/auth/inscription` | Créer un nouveau compte utilisateur | 
-| `POST` | `/api/auth/connexion` | Connecter un utilisateur et définir le cookie JWT | 
-| `GET` | `/api/auth/moi` | Récupérer les informations de l'utilisateur connecté |
+| Méthode | Endpoint | Description | 
+
+| `POST` | `/api/auth/inscription` | Créer un nouveau compte utilisateur |
+| `POST` | `/api/auth/connexion` | Connecter un utilisateur et définir le cookie JWT |
+| `GET` | `/api/auth/moi` | Récupérer les informations de l'utilisateur connecté | 
 | `POST` | `/api/auth/deconnexion` | Déconnecter l'utilisateur et supprimer le cookie | 
 
 ###  Utilisateurs (`/api/utilisateurs`)
 
 | Méthode | Endpoint | Description | 
+
 | `GET` | `/api/utilisateurs/profil/:id` | Récupérer le profil d'un utilisateur par ID | 
-| `PUT` | `/api/utilisateurs/profil/:id` | Mettre à jour les informations d'un profil |
+| `PUT` | `/api/utilisateurs/profil/:id` | Mettre à jour les informations d'un profil | 
 
 ###  Groupes (`/api/groupe`)
 
 *Toutes les routes ci-dessous nécessitent d'être authentifié.*
 
 | Méthode | Endpoint | Description | Permissions | 
+
 | `GET` | `/api/groupe` | Lister les groupes de l'utilisateur connecté | Authentifié | 
 | `POST` | `/api/groupe` | Créer un groupe (le créateur devient `admin`) | Authentifié | 
 | `GET` | `/api/groupe/:groupe_id` | Détails d'un groupe | Membre | 
