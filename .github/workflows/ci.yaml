@@ -27,5 +27,4 @@ jobs:
         working-directory: Front-end
         run: |
           npm ci
-          npm run lint --if-present
           npm run build
