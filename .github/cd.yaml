@@ -1,0 +1,44 @@
+name: Mise a jour securite dependances
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  audit-et-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check du dépôt
+        uses: actions/checkout@v7
+
+      - name: Configurer Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Vérifier la cohérence et corriger les vulnérabilités Back-end
+        working-directory: Back-end
+        run: |
+          npm ci
+          npm audit fix --audit-level=moderate || true
+
+      - name: Vérifier la cohérence et corriger les vulnérabilités Front-end
+        working-directory: Front-end
+        run: |
+          npm ci
+          npm audit fix --audit-level=moderate || true
+
+      - name: Créer une Pull Request si des fichiers ont été mis à jour
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "fix: met a jour les dependances vulnerables"
+          title: "fix(dependances): correction automatique des vulnérabilités npm"
+          body: |
+            Ce workflow a vérifié la cohérence entre `package.json` et `package-lock.json` et appliqué `npm audit fix` sur `Back-end` et `Front-end`.
+          branch: fix/auto-audit-dependances
