@@ -1,17 +1,30 @@
 import "./Connexion.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx"
 
 const Connexion = () => {
 
     const navigate = useNavigate();
+    const { seConnecter } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [erreur, setErreur] = useState("")
 
 
-    const gererConnexion = (event) => {
+    const gererConnexion = async (event) => {
         event.preventDefault();
-        console.log("Formulaire envoyé");
+        setErreur("");
+
+        try {
+            await seConnecter({email, mot_de_passe: password});
+
+            console.log("Connexion réussie");
+            navigate("/tableau-de-bord"); 
+        } catch (err) {
+            setErreur(err.message || "Erreur lors de la connexion")
+        }
     };
 
     const gererInscription = () => {
@@ -20,8 +33,11 @@ const Connexion = () => {
 
     return (
         <main>
-            <h1>Bienvenue sur Lovelace Factory !</h1>
+            <h1>Bienvenue sur Joya</h1>
             <p>Connecte-toi pour créer des événements avec tes proches.</p>
+
+            {erreur && <p style={{color: "red"}} role="alert">{erreur}</p>}
+            
             <form onSubmit={gererConnexion}>
 
                 <label htmlFor="email">Adresse e-mail</label>

@@ -1,0 +1,89 @@
+/* Le conteneur global qui enveloppe TOUT le tableau de bord et la navigation */
+div {
+    display: flex;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* La zone de droite (qui contient le main et tout le contenu du dashboard) */
+div > main {
+    margin-left: 240px; /* Laisse la place pour la sidebar de 240px de large */
+    width: calc(100% - 240px);
+    padding: 30px 40px;
+    background-color: #f7f6fb;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* En-tête du tableau de bord */
+main > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+main > header h1 {
+    color: #7654a8;
+    margin: 0 0 5px 0;
+    font-size: 28px;
+}
+
+main > header p {
+    color: #555555;
+    margin: 0;
+}
+
+/* Bouton / Lien de l'en-tête */
+main > header a {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #7654a8;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* Cartes / Sections */
+section {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+section h2 {
+    color: #7654a8;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+section p {
+    color: #555555;
+}
+
+/* Tableaux */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eeeeee;
+    color: #555555;
+}
+
+th {
+    background-color: #f3eefb;
+    color: #7654a8;
+}
