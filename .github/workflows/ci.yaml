@@ -14,8 +14,8 @@ jobs:
           node-version: "24"
           cache: "npm"
           cache-dependency-path: |
-            Back-end/package-lock.js
-            Front-end/package-lock.js
+            Back-end/package-lock.json
+            Front-end/package-lock.json
 
       - name: Installer et tester le Back-end
         working-directory: Back-end
