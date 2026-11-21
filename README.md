@@ -1,119 +1,232 @@
-# LoveLace 🚀
+# Joya 
 
-LoveLace est une application web collaborative de gestion d'événements et de groupes. Elle permet de créer des cercles d'utilisateurs, d'organiser des événements, de participer à des votes (dates/lieux), d'assigner des tâches logistiques et de suivre ses notifications en temps réel.
+Joya est une application web collaborative de gestion d'événements. Elle permet de créer des groupes d'utilisateurs, d'organiser des événements.
 
----
 
-## 🛠️ Stack Technique
+##  Table des matières
 
-* **Frontend :** React (via Vite)
-* **Backend :** Node.js, Express
-* **Base de données :** PostgreSQL (exécuté via Docker)
-* **Outils :** Docker Compose, Git
+* [Fonctionnalités](#-fonctionnalités)
 
----
+* [Stack Technique](#-stack-technique)
 
-## 📁 Arborescence du Projet
+* [Architecture du Projet](#-architecture-du-projet)
 
-LoveLace/
-├── docker-compose.yml        # Configuration du conteneur PostgreSQL
-├── Lovelace.sql              # Script global de migration et de peuplement (Bdd)
-├── .gitignore
-├── README.md
-│
-├── backend/                  # API REST (Node.js / Express)
-│   ├── package.json
-│   ├── .env                  # Variables d'environnement (PORT, DB_*)
-│   └── src/
-│       ├── config/           # Connexion à la base de données
-│       ├── middlewares/      # Authentification et sécurité (JWT)
-│       ├── routes/           # Contrôleurs et routes API (groupes, événements, etc.)
-│       └── server.js         # Point d'entrée de l'API
-│
-└── frontend/                 # Application Client (React / Vite)
-    ├── package.json
-    ├── vite.config.js
-    ├── index.html
-    └── src/
-        ├── assets/           # Ressources graphiques
-        ├── components/       # Composants réutilisables (modales, cartes)
-        ├── pages/            # Pages de l'application (Auth, Accueil, Votes, etc.)
-        ├── services/         # Appels API (Fetch / Axios)
-        ├── App.jsx           # Routage principal
-        └── main.jsx          # Point d'entrée React
+* [Prérequis](#-prérequis)
 
----
+* [Installation et Configuration](#-installation-et-configuration)
 
-## 🗄️ Modèle de Données (PostgreSQL)
-Le schéma relationnel repose sur 8 tables principales sécurisées par des contraintes CHECK strictes :
+* [Base de Données](#-base-de-données)
 
-Utilisateur : Gestion des profils et identifiants uniques.
+* [Documentation de l'API](#-documentation-de-lapi)
 
-Groupe : Espaces communautaires.
+* [Contributeurs](#-contributeurs)
 
-Utilisateur_Groupe : Table de liaison avec rôles (admin, membre).
+  ## Fonctionnalités
 
-Evenement : Planification avec statuts gérés (confirmé, annulé, en attente).
+* **Authentification & Sécurité** : Inscription, connexion, gestion de session via **JWT** stocké dans des cookies sécurisés (`httpOnly`), hachage des mots de passe avec `bcryptjs`.
 
-Invitation : Gestion des participations (groupes et événements).
+* **Gestion des Utilisateurs** : Consultation et mise à jour des profils utilisateurs.
 
-Tache : Suivi logistique et états d'avancement.
+* **Gestion des Groupes** : Création, modification et suppression de groupes, gestion des membres, invitations et attribution des rôles (`admin` / `membre`) avec contrôle d'accès granulaire.
 
-PropositionVote : Système de vote interactif (dates et lieux).
+* **Gestion des Événements** : Création, consultation (événements créés ou rejoints), mise à jour et suppression d'événements liés aux utilisateurs et aux groupes.
 
-Notification : Alertes contextuelles pour les utilisateurs
+* **Schéma Base de Données complet** : Prêt pour la gestion des tâches, des votes (dates/lieux) et des notifications.
 
----
+##  Stack Technique
 
-## 🚀 Guide d'Installation et de Lancement
-1. Prérequis
-Avoir Docker et Docker Desktop installés.
+* **Environnement** : Node.js (Modules ES)
 
-Avoir Node.js installé sur votre machine.
+* **Framework Web** : Express (`^5.3.0`)
 
-2. Lancer la Base de Données (Docker)
-À la racine du projet, lance le conteneur PostgreSQL configuré dans ton docker-compose.yml :
+* **Base de données** : PostgreSQL (`pg`)
 
-Bash
-docker compose up -d
-Le fichier Lovelace.sql placé dans le dossier s'exécutera automatiquement au premier lancement pour initialiser les tables et insérer les données de test.
+* **Authentification** : JSON Web Token (`jsonwebtoken`) & `cookie-parser`
 
-3. Configurer et Lancer le Backend
-Rends-toi dans le dossier Back-end :
+* **Sécurité** : `bcryptjs`, `cors`
 
-Bash
-cd backend
-Assure-toi d'avoir un fichier .env configuré avec tes accès (ex: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME).
-Installe les dépendances :
+* **Outils de développement** : `dotenv`, `nodemon`, `jest`
 
-Bash
-npm install
-Lance le serveur de développement :
+##  Architecture du Projet
 
-Bash
-npm run dev
-Le serveur écoute par défaut sur http://localhost:3000. Vous pouvez tester la connexion à la base de données en vous rendant sur : http://localhost:3000/api/test/test-db.
-4. Lancer le Frontend
-Ouvre un autre terminal et rends-toi dans le dossier Front-end :
+```
+back-end/
+├── src/
+│   ├── config/
+│   │   └── db.js                 # Configuration du pool de connexion PostgreSQL
+│   ├── controllers/
+│   │   ├── authController.js     # Logique de contrôle d'authentification
+│   │   ├── evenementController.js# Logique de contrôle des événements
+│   │   ├── groupeController.js   # Logique de contrôle des groupes et membres
+│   │   └── utilisateurController.js # Logique de contrôle des profils
+│   ├── middlewares/
+│   │   ├── auth.js               # Vérification du token JWT (cookies)
+│   │   ├── droitsGroupe.js       # Vérification des rôles (membre / admin)
+│   │   └── erreurs.js            # Gestionnaire global d'erreurs HTTP
+│   ├── models/
+│   │   ├── authModel.js          # Requêtes SQL liées à l'authentification
+│   │   ├── evenementModel.js     # Requêtes SQL liées aux événements
+│   │   ├── groupeModels.js       # Requêtes SQL liées aux groupes
+│   │   └── utilisateurModel.js   # Requêtes SQL liées aux utilisateurs
+│   ├── Routes/
+│   │   ├── authRoutes.js         # Routes /api/auth
+│   │   ├── evenementRoutes.js    # Routes /api/evenements
+│   │   ├── groupeRoutes.js       # Routes /api/groupe
+│   │   ├── testRoutes.js         # Routes /api/test
+│   │   └── utilisateurRoutes.js  # Routes /api/utilisateurs
+│   ├── services/
+│   │   ├── authServices.js       # Règles métier d'authentification
+│   │   ├── evenementService.js   # Règles métier des événements
+│   │   ├── groupeService.js      # Règles métier des groupes
+│   │   └── utilisateurService.js # Règles métier des utilisateurs
+│   ├── erreurs.js                # Classe personnalisée ErreurHttp
+│   ├── index.js                  # Configuration de l'application Express
+│   └── server.js                 # Point d'entrée et démarrage du serveur
+├── migration_up.sql              # Création des tables PostgreSQL
+├── migration_down.sql            # Suppression des tables PostgreSQL
+├── seed.sql                      # Jeu de données initiales (utilisateurs, groupes, etc.)
+├── seed_2026_11.sql              # Réinitialisation des séquences SQL
+├── .env.example                  # Exemple de fichier de configuration
+└── package.json
 
-Bash
-cd Front-end
-Installe les dépendances :
+```
 
-Bash
-npm install
-Lance l'application React :
+##  Prérequis
 
-Bash
-npm run dev
+* [Node.js](https://nodejs.org/) (v18 ou supérieur recommandé)
 
----
+* [PostgreSQL](https://www.postgresql.org/) installé et en cours d'exécution
 
-## 🌿 Workflow Git & Collaboration
-Pour contribuer au projet, respectez les règles suivantes :
+##  Installation et Configuration
 
-Créez une branche dédiée par fonctionnalité : git checkout -b feature/VotreNom/nom-de-la-fonctionnalite
+1. **Cloner le dépôt** :
 
-Suivez la convention Conventional Commits pour vos messages (ex: feat(auth): ajout du formulaire de connexion, fix(db): correction de contrainte).
+   ```
+   git clone https://github.com/Monteiro-David/LoveLace.git
+   cd back-end
+   
+   ```
 
-Ouvrez une Pull Request sur GitHub pour validation avant fusion sur master / main.
+2. **Installer les dépendances** :
+
+   ```
+   npm install
+   
+   ```
+
+3. **Configurer les variables d'environnement** :
+   Copiez le fichier `.env.example` vers `.env` et renseignez vos informations (notamment `JWT_SECRET` qui est obligatoire au démarrage) :
+
+   ```
+   cp .env.example .env
+   
+   ```
+
+   Exemple de contenu `.env` :
+
+   ```
+   PORT=3000
+   FRONT_URL=http://localhost:5173
+   
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USER=votre_utilisateur
+   DB_PASSWORD=votre_mot_de_passe
+   DB_NAME=Lovelace
+   
+   JWT_SECRET=votre_cle_secrete_tres_longue
+   
+   ```
+
+4. **Lancer le serveur** :
+
+   * En mode développement (avec rechargement automatique via `nodemon`) :
+
+     ```
+     npm run dev
+     
+     ```
+
+   * En mode production :
+
+     ```
+     npm start
+     
+     ```
+
+##  Base de Données
+
+1. Créez une base de données nommée `Lovelace` dans PostgreSQL.
+
+2. Exécutez les scripts SQL dans l'ordre suivant pour initialiser le schéma et les données de test :
+
+   ```
+   psql -U votre_utilisateur -d Lovelace -f migration_up.sql
+   psql -U votre_utilisateur -d Lovelace -f seed.sql
+   psql -U votre_utilisateur -d Lovelace -f seed_2026_11.sql
+   
+   ```
+
+   *(Pour réinitialiser/supprimer toutes les tables, utilisez `migration_down.sql`)*.
+
+##  Documentation de l'API
+
+###  Test
+
+| Méthode | Endpoint | Description | 
+
+| `GET` | `/api/test/test-db` | Vérifie la connexion à PostgreSQL |
+
+###  Authentification (`/api/auth`)
+
+| Méthode | Endpoint | Description | 
+
+| `POST` | `/api/auth/inscription` | Créer un nouveau compte utilisateur |
+| `POST` | `/api/auth/connexion` | Connecter un utilisateur et définir le cookie JWT |
+| `GET` | `/api/auth/moi` | Récupérer les informations de l'utilisateur connecté | 
+| `POST` | `/api/auth/deconnexion` | Déconnecter l'utilisateur et supprimer le cookie | 
+
+###  Utilisateurs (`/api/utilisateurs`)
+
+| Méthode | Endpoint | Description | 
+
+| `GET` | `/api/utilisateurs/profil/:id` | Récupérer le profil d'un utilisateur par ID | 
+| `PUT` | `/api/utilisateurs/profil/:id` | Mettre à jour les informations d'un profil | 
+
+###  Groupes (`/api/groupe`)
+
+*Toutes les routes ci-dessous nécessitent d'être authentifié.*
+
+| Méthode | Endpoint | Description | Permissions | 
+
+| `GET` | `/api/groupe` | Lister les groupes de l'utilisateur connecté | Authentifié | 
+| `POST` | `/api/groupe` | Créer un groupe (le créateur devient `admin`) | Authentifié | 
+| `GET` | `/api/groupe/:groupe_id` | Détails d'un groupe | Membre | 
+| `PUT` | `/api/groupe/:groupe_id` | Modifier un groupe | Admin | 
+| `DELETE` | `/api/groupe/:groupe_id` | Supprimer un groupe | Admin | 
+| `GET` | `/api/groupe/:groupe_id/membres` | Lister les membres d'un groupe | Membre | 
+| `POST` | `/api/groupe/:groupe_id/invitations` | Ajouter/inviter un membre dans le groupe | Admin | 
+| `PUT` | `/api/groupe/:groupe_id/membres/:utilisateur_id` | Modifier le rôle d'un membre (`admin`/`membre`) | Admin | 
+| `DELETE` | `/api/groupe/:groupe_id/membres/:utilisateur_id` | Quitter le groupe ou retirer un membre | Admin ou Soi-même | 
+
+###  Événements (`/api/evenements`)
+
+*Toutes les routes ci-dessous nécessitent d'être authentifié.*
+
+| Méthode | Endpoint | Description | 
+
+| `GET` | `/api/evenements` | Lister les événements créés ou auxquels l'utilisateur est invité | 
+| `POST` | `/api/evenements` | Créer un nouvel événement | 
+| `GET` | `/api/evenements/:id_evenement` | Récupérer les détails d'un événement | 
+| `PUT` | `/api/evenements/:id_evenement` | Modifier la date, le lieu ou le statut d'un événement | 
+| `DELETE` | `/api/evenements/:id_evenement` | Supprimer un événement | 
+
+##  Contributeurs
+
+Ce projet a été développé par :
+
+* **Monteiro David** ([@Monteiro-David](https://github.com/Monteiro-David))
+
+* **Assy Wone** ([@sywone75-png](https://github.com/sywone75-png))
+
+* **Mayulie** ([@Mayulie](https://github.com/Mayulie))
