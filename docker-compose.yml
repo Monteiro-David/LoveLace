@@ -9,7 +9,6 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./Lovelace.sql:/docker-entrypoint-initdb.d/01-Lovelace.sql
       - LoveLace-data:/var/lib/postgresql/data
 
   backend:
