@@ -9,11 +9,31 @@ import groupeRoutes from "./Routes/groupeRoutes.js";
 import evenementRoutes from "./Routes/evenementRoutes.js";
 import { gestionErreurs } from "./middlewares/erreurs.js";
 
+// charger et valider les variables
+
+const required = [
+  "DB_HOST",
+  "DB_PORT",
+  "DB_USER",
+  "DB_PASSEWORD",
+  "DB_NAME",
+  "JWT_SECRET",
+];
+const missing = required.filter((k) => !process.env[k]);
+
+if (missing.length > 0) {
+  console.error(`Variables manquates : ${missing.join(", ")}`);
+  console.error("Copie .en.example vers .env et remplis les valeurs.");
+  process.exit(1);
+}
+
 const app = express();
-app.use(cors({
-  origin: process.env.FRONT_URL || "http://localhost:5173",
-  edentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.FRONT_URL || "http://localhost:5173",
+    edentials: true,
+  }),
+);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -23,7 +43,6 @@ app.use("/api/groupe", groupeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/utilisateurs", utilisateurRoutes);
 app.use("/api/evenements", evenementRoutes);
-
 
 app.get("/", (req, res) => {
   res.send("Bienvenue sur l'API de LoveLace !");
