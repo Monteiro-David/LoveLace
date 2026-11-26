@@ -1,232 +1,439 @@
-# Joya 
+# Joya
 
-Joya est une application web collaborative de gestion d'événements. Elle permet de créer des groupes d'utilisateurs, d'organiser des événements.
+## 1. Le projet
 
+**Joya** est une application web collaborative qui permet d'organiser des événements avec ses proches, ses amis ou ses collègues.
 
-##  Table des matières
+L'objectif est de centraliser l'organisation des événements au même endroit : création de groupes, gestion des membres, invitations et organisation des événements.
 
-* [Fonctionnalités](#-fonctionnalités)
+### Fonctionnalités développées
 
-* [Stack Technique](#-stack-technique)
+- **Authentification et gestion des profils :** inscription, connexion et gestion du profil utilisateur.
+- **Création et gestion des groupes :** création et administration de groupes.
+- **Gestion des membres et invitations :** ajout, gestion des membres et invitations à rejoindre un groupe.
+- **Création et gestion des événements :** organisation et gestion des événements au sein des groupes.
 
-* [Architecture du Projet](#-architecture-du-projet)
+Le projet évolue progressivement dans le cadre de notre formation en développement et DevOps.
 
-* [Prérequis](#-prérequis)
+## 2. Stack technique
 
-* [Installation et Configuration](#-installation-et-configuration)
+### Frontend
 
-* [Base de Données](#-base-de-données)
+- **React 19** : bibliothèque JavaScript pour construire l'interface utilisateur.
+- **Vite** : outil de développement et de compilation.
+- **React Router DOM** : gestion de la navigation.
+- **ESLint** : analyse et vérification du code.
 
-* [Documentation de l'API](#-documentation-de-lapi)
+### Backend
 
-* [Contributeurs](#-contributeurs)
+- **Node.js** : environnement d'exécution JavaScript.
+- **Express 5** : framework pour construire l'API REST.
+- **PostgreSQL 16** : système de gestion de base de données relationnelle.
+- **node-postgres (pg)** : connexion entre le backend et PostgreSQL.
+- **JWT** : gestion des jetons d'authentification.
+- **bcryptjs** : hachage des mots de passe.
+- **cookie-parser** : gestion des cookies.
+- **dotenv** : gestion des variables d'environnement.
+- **CORS** : gestion des échanges entre frontend et backend.
 
-  ## Fonctionnalités
+### DevOps
 
-* **Authentification & Sécurité** : Inscription, connexion, gestion de session via **JWT** stocké dans des cookies sécurisés (`httpOnly`), hachage des mots de passe avec `bcryptjs`.
+- **Docker** : conteneurisation des services.
+- **Docker Compose** : orchestration du frontend, du backend et de la base de données.
+- **GitHub Actions** : mise en place progressive de l'intégration continue (CI).
 
-* **Gestion des Utilisateurs** : Consultation et mise à jour des profils utilisateurs.
+La démarche DevOps est enrichie au fur et à mesure de notre apprentissage.
 
-* **Gestion des Groupes** : Création, modification et suppression de groupes, gestion des membres, invitations et attribution des rôles (`admin` / `membre`) avec contrôle d'accès granulaire.
+## 3. Prérequis
 
-* **Gestion des Événements** : Création, consultation (événements créés ou rejoints), mise à jour et suppression d'événements liés aux utilisateurs et aux groupes.
+Avant de démarrer le projet, vous devez disposer des outils suivants :
 
-* **Schéma Base de Données complet** : Prêt pour la gestion des tâches, des votes (dates/lieux) et des notifications.
+- Git
+- Node.js et npm
+- Docker
+- Docker Compose
 
-##  Stack Technique
+Vérifier les installations :
 
-* **Environnement** : Node.js (Modules ES)
-
-* **Framework Web** : Express (`^5.3.0`)
-
-* **Base de données** : PostgreSQL (`pg`)
-
-* **Authentification** : JSON Web Token (`jsonwebtoken`) & `cookie-parser`
-
-* **Sécurité** : `bcryptjs`, `cors`
-
-* **Outils de développement** : `dotenv`, `nodemon`, `jest`
-
-##  Architecture du Projet
-
-```
-back-end/
-├── src/
-│   ├── config/
-│   │   └── db.js                 # Configuration du pool de connexion PostgreSQL
-│   ├── controllers/
-│   │   ├── authController.js     # Logique de contrôle d'authentification
-│   │   ├── evenementController.js# Logique de contrôle des événements
-│   │   ├── groupeController.js   # Logique de contrôle des groupes et membres
-│   │   └── utilisateurController.js # Logique de contrôle des profils
-│   ├── middlewares/
-│   │   ├── auth.js               # Vérification du token JWT (cookies)
-│   │   ├── droitsGroupe.js       # Vérification des rôles (membre / admin)
-│   │   └── erreurs.js            # Gestionnaire global d'erreurs HTTP
-│   ├── models/
-│   │   ├── authModel.js          # Requêtes SQL liées à l'authentification
-│   │   ├── evenementModel.js     # Requêtes SQL liées aux événements
-│   │   ├── groupeModels.js       # Requêtes SQL liées aux groupes
-│   │   └── utilisateurModel.js   # Requêtes SQL liées aux utilisateurs
-│   ├── Routes/
-│   │   ├── authRoutes.js         # Routes /api/auth
-│   │   ├── evenementRoutes.js    # Routes /api/evenements
-│   │   ├── groupeRoutes.js       # Routes /api/groupe
-│   │   ├── testRoutes.js         # Routes /api/test
-│   │   └── utilisateurRoutes.js  # Routes /api/utilisateurs
-│   ├── services/
-│   │   ├── authServices.js       # Règles métier d'authentification
-│   │   ├── evenementService.js   # Règles métier des événements
-│   │   ├── groupeService.js      # Règles métier des groupes
-│   │   └── utilisateurService.js # Règles métier des utilisateurs
-│   ├── erreurs.js                # Classe personnalisée ErreurHttp
-│   ├── index.js                  # Configuration de l'application Express
-│   └── server.js                 # Point d'entrée et démarrage du serveur
-├── migration_up.sql              # Création des tables PostgreSQL
-├── migration_down.sql            # Suppression des tables PostgreSQL
-├── seed.sql                      # Jeu de données initiales (utilisateurs, groupes, etc.)
-├── seed_2026_11.sql              # Réinitialisation des séquences SQL
-├── .env.example                  # Exemple de fichier de configuration
-└── package.json
-
+```bash
+node --version
+npm --version
+docker --version
+docker compose version
+git --version
 ```
 
-##  Prérequis
+## 4. Installation
 
-* [Node.js](https://nodejs.org/) (v18 ou supérieur recommandé)
+### 4.1 Cloner le projet
 
-* [PostgreSQL](https://www.postgresql.org/) installé et en cours d'exécution
+```bash
+git clone https://github.com/Monteiro-David/LoveLace.git
+cd LoveLace
+```
 
-##  Installation et Configuration
+### 4.2 Installer les dépendances
 
-1. **Cloner le dépôt** :
+Installer les dépendances du backend :
 
-   ```
-   git clone https://github.com/Monteiro-David/LoveLace.git
-   cd back-end
-   
-   ```
+```bash
+cd Back-end
+npm install
+```
 
-2. **Installer les dépendances** :
+Revenir à la racine puis installer celles du frontend :
 
-   ```
-   npm install
-   
-   ```
+```bash
+cd ../Front-end
+npm install
+```
 
-3. **Configurer les variables d'environnement** :
-   Copiez le fichier `.env.example` vers `.env` et renseignez vos informations (notamment `JWT_SECRET` qui est obligatoire au démarrage) :
+Revenir à la racine du projet :
 
-   ```
-   cp .env.example .env
-   
-   ```
+```bash
+cd ..
+```
 
-   Exemple de contenu `.env` :
+### 4.3 Configurer les variables d'environnement
 
-   ```
-   PORT=3000
-   FRONT_URL=http://localhost:5173
-   
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_USER=votre_utilisateur
-   DB_PASSWORD=votre_mot_de_passe
-   DB_NAME=Lovelace
-   
-   JWT_SECRET=votre_cle_secrete_tres_longue
-   
-   ```
+Créer le fichier `.env` dans le dossier `Back-end/`, à partir du fichier `.env.example` :
 
-4. **Lancer le serveur** :
+```bash
+cp Back-end/.env.example Back-end/.env
+```
 
-   * En mode développement (avec rechargement automatique via `nodemon`) :
+Renseigner ensuite les variables nécessaires :
 
-     ```
-     npm run dev
-     
-     ```
+```env
+# Configuration du serveur
+PORT=3000
 
-   * En mode production :
+# Configuration PostgreSQL
+DB_HOST=database
+DB_PORT=5432
+DB_USER=votre_utilisateur
+DB_PASSWORD=votre_mot_de_passe
+DB_NAME=Lovelace
 
-     ```
-     npm start
-     
-     ```
+# Secret JWT
+JWT_SECRET=votre_secret
+```
 
-##  Base de Données
+**Important :**
 
-1. Créez une base de données nommée `Lovelace` dans PostgreSQL.
+- Le fichier `.env` contient des informations sensibles et ne doit pas être partagé ni ajouté au dépôt Git.
+- `DB_HOST=database` permet au backend de communiquer avec le service PostgreSQL dans Docker Compose.
+- Les identifiants de connexion doivent être cohérents avec la configuration du service PostgreSQL.
 
-2. Exécutez les scripts SQL dans l'ordre suivant pour initialiser le schéma et les données de test :
+## 5. Lancer le projet
 
-   ```
-   psql -U votre_utilisateur -d Lovelace -f migration_up.sql
-   psql -U votre_utilisateur -d Lovelace -f seed.sql
-   psql -U votre_utilisateur -d Lovelace -f seed_2026_11.sql
-   
-   ```
+Le projet utilise Docker Compose pour démarrer les trois services avec une seule commande.
 
-   *(Pour réinitialiser/supprimer toutes les tables, utilisez `migration_down.sql`)*.
+Depuis la racine du projet :
 
-##  Documentation de l'API
+```bash
+docker compose up -d --build
+```
 
-###  Test
+Cette commande :
 
-| Méthode | Endpoint | Description | 
+- construit les images Docker du frontend et du backend ;
+- démarre le conteneur PostgreSQL ;
+- démarre le backend ;
+- démarre le frontend en dépendance du backend.
 
-| `GET` | `/api/test/test-db` | Vérifie la connexion à PostgreSQL |
+### Accéder à l'application
 
-###  Authentification (`/api/auth`)
+Une fois les conteneurs démarrés :
 
-| Méthode | Endpoint | Description | 
+| Service    | Adresse               |
+| ---------- | --------------------- |
+| Frontend   | http://localhost:5173 |
+| Backend    | http://localhost:3000 |
+| PostgreSQL | localhost:5432        |
 
-| `POST` | `/api/auth/inscription` | Créer un nouveau compte utilisateur |
-| `POST` | `/api/auth/connexion` | Connecter un utilisateur et définir le cookie JWT |
-| `GET` | `/api/auth/moi` | Récupérer les informations de l'utilisateur connecté | 
-| `POST` | `/api/auth/deconnexion` | Déconnecter l'utilisateur et supprimer le cookie | 
+### Initialiser la base de données
 
-###  Utilisateurs (`/api/utilisateurs`)
+L'initialisation de la base de données est effectuée manuellement.
 
-| Méthode | Endpoint | Description | 
+Une fois le conteneur PostgreSQL démarré, exécuter la migration :
 
-| `GET` | `/api/utilisateurs/profil/:id` | Récupérer le profil d'un utilisateur par ID | 
-| `PUT` | `/api/utilisateurs/profil/:id` | Mettre à jour les informations d'un profil | 
+```bash
+docker exec -i Lovelace_db psql -U <DB_USER> -d <DB_NAME> < Back-end/database/migration/migration_up.sql
+```
 
-###  Groupes (`/api/groupe`)
+Remplacer `<DB_USER>` et `<DB_NAME>` par les valeurs renseignées dans le fichier `.env`.
 
-*Toutes les routes ci-dessous nécessitent d'être authentifié.*
+Exécuter ensuite les scripts de seed :
 
-| Méthode | Endpoint | Description | Permissions | 
+```bash
+docker exec -i Lovelace_db psql -U <DB_USER> -d <DB_NAME> < Back-end/database/seeds/seed.sql
+```
 
-| `GET` | `/api/groupe` | Lister les groupes de l'utilisateur connecté | Authentifié | 
-| `POST` | `/api/groupe` | Créer un groupe (le créateur devient `admin`) | Authentifié | 
-| `GET` | `/api/groupe/:groupe_id` | Détails d'un groupe | Membre | 
-| `PUT` | `/api/groupe/:groupe_id` | Modifier un groupe | Admin | 
-| `DELETE` | `/api/groupe/:groupe_id` | Supprimer un groupe | Admin | 
-| `GET` | `/api/groupe/:groupe_id/membres` | Lister les membres d'un groupe | Membre | 
-| `POST` | `/api/groupe/:groupe_id/invitations` | Ajouter/inviter un membre dans le groupe | Admin | 
-| `PUT` | `/api/groupe/:groupe_id/membres/:utilisateur_id` | Modifier le rôle d'un membre (`admin`/`membre`) | Admin | 
-| `DELETE` | `/api/groupe/:groupe_id/membres/:utilisateur_id` | Quitter le groupe ou retirer un membre | Admin ou Soi-même | 
+Si le projet utilise également le jeu de données complémentaire :
 
-###  Événements (`/api/evenements`)
+```bash
+docker exec -i Lovelace_db psql -U <DB_USER> -d <DB_NAME> < Back-end/database/seeds/seed_2026_11.sql
+```
 
-*Toutes les routes ci-dessous nécessitent d'être authentifié.*
+Ces scripts permettent de créer la structure de la base de données et d'insérer les données nécessaires au fonctionnement de l'application.
 
-| Méthode | Endpoint | Description | 
+**Attention :** les migrations et les seeds doivent être exécutés dans le bon ordre. Ne relancez pas une migration de création sur une base déjà initialisée sans vérifier son contenu.
 
-| `GET` | `/api/evenements` | Lister les événements créés ou auxquels l'utilisateur est invité | 
-| `POST` | `/api/evenements` | Créer un nouvel événement | 
-| `GET` | `/api/evenements/:id_evenement` | Récupérer les détails d'un événement | 
-| `PUT` | `/api/evenements/:id_evenement` | Modifier la date, le lieu ou le statut d'un événement | 
-| `DELETE` | `/api/evenements/:id_evenement` | Supprimer un événement | 
+### Vérifier les conteneurs
 
-##  Contributeurs
+Afficher les conteneurs actifs :
 
-Ce projet a été développé par :
+```bash
+docker compose ps
+```
 
-* **Monteiro David** ([@Monteiro-David](https://github.com/Monteiro-David))
+Consulter les logs :
 
-* **Assy Wone** ([@sywone75-png](https://github.com/sywone75-png))
+```bash
+docker compose logs -f
+```
 
-* **Mayulie** ([@Mayulie](https://github.com/Mayulie))
+Consulter les logs d'un service particulier :
+
+```bash
+docker compose logs -f backend
+docker compose logs -f frontend
+docker compose logs -f database
+```
+
+### Arrêter le projet
+
+Arrêter les conteneurs :
+
+```bash
+docker compose down
+```
+
+Pour arrêter les conteneurs et supprimer également le volume de données PostgreSQL :
+
+```bash
+docker compose down -v
+```
+
+**Attention :** cette dernière commande supprime les données stockées dans le volume de la base de données.
+
+## 6. Scripts disponibles
+
+### Backend
+
+Depuis le dossier `Back-end/` :
+
+| Commande      | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| `npm run dev` | Démarre le serveur en mode développement avec Nodemon. |
+| `npm start`   | Démarre le serveur en mode production.                 |
+
+### Frontend
+
+Depuis le dossier `Front-end/` :
+
+| Commande          | Description                                    |
+| ----------------- | ---------------------------------------------- |
+| `npm run dev`     | Démarre le serveur Vite en mode développement. |
+| `npm run build`   | Compile l'application pour la production.      |
+| `npm run preview` | Prévisualise la version compilée.              |
+| `npm run lint`    | Analyse le code avec ESLint.                   |
+
+Le lancement habituel de l'ensemble du projet se fait avec Docker Compose depuis la racine.
+
+## 7. Dépendances du projet
+
+Les dépendances sont gérées séparément pour le frontend et le backend.
+
+### Backend
+
+Les principales dépendances sont :
+
+- `express` : création de l'API.
+- `pg` : connexion à PostgreSQL.
+- `bcryptjs` : sécurisation des mots de passe.
+- `jsonwebtoken` : gestion des jetons JWT.
+- `cookie-parser` : lecture des cookies.
+- `cors` : gestion des requêtes cross-origin.
+- `dotenv` : chargement des variables d'environnement.
+- `nodemon` : redémarrage automatique du serveur en développement.
+- `jest` : environnement de tests prévu pour le backend.
+
+### Frontend
+
+Les principales dépendances sont :
+
+- `react` et `react-dom` : construction de l'interface.
+- `react-router-dom` : navigation entre les pages.
+- `vite` : environnement de développement et compilation.
+- `eslint` : qualité et analyse du code.
+
+## 8. Structure du projet
+
+```text
+LoveLace/
+│
+├── .github/
+│   └── workflows/
+│       ├── ci.yaml
+│       └── security.yaml
+│
+├── Back-end/
+│   ├── database/
+│   │   ├── migration/
+│   │   │   ├── migration_up.sql
+│   │   │   └── migration_down.sql
+│   │   └── seeds/
+│   │       ├── seed.sql
+│   │       └── seed_2026_11.sql
+│   │
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   ├── Routes/
+│   │   ├── services/
+│   │   ├── errors/
+│   │   ├── index.js
+│   │   └── server.js
+│   │
+│   ├── tests/
+│   ├── .env.example
+│   ├── Dockerfile
+│   └── package.json
+│
+├── Front-end/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   └── pages/
+│   │
+│   ├── Dockerfile
+│   ├── package.json
+│   └── vite.config.js
+│
+├── docker-compose.yml
+└── README.md
+```
+
+Cette structure présente les principaux dossiers du projet. Certains sous-dossiers peuvent évoluer au fil du développement.
+
+## 9. Dépannage
+
+### Docker ne démarre pas
+
+Vérifier que Docker Desktop est lancé :
+
+```bash
+docker info
+```
+
+### Un conteneur ne démarre pas
+
+Afficher les logs :
+
+```bash
+docker compose logs -f
+```
+
+### Le backend ne se connecte pas à PostgreSQL
+
+Vérifier les éléments suivants :
+
+- Le conteneur PostgreSQL est démarré.
+- Les identifiants de connexion sont corrects.
+- `DB_HOST` correspond au nom du service Docker, soit `database`.
+- Les variables d'environnement sont correctement renseignées.
+
+### Le frontend ne communique pas avec le backend
+
+Vérifier que les trois conteneurs sont actifs :
+
+```bash
+docker compose ps
+```
+
+Vérifier également la configuration du proxy Vite et la variable `VITE_API_TARGET`.
+
+### Le port est déjà utilisé
+
+Si un port est déjà occupé, identifier le processus qui l'utilise avant de relancer Docker.
+
+Par exemple :
+
+```bash
+lsof -i :3000
+lsof -i :5173
+lsof -i :5432
+```
+
+## 10. Contribuer
+
+Les contributions au projet sont organisées avec Git et GitHub.
+
+Nous utilisons une organisation basée sur les branches et les Pull Requests.
+
+### Workflow de contribution
+
+1. Se placer sur la branche principale et récupérer les dernières modifications :
+
+```bash
+git switch master
+git pull origin master
+```
+
+2. Créer une branche dédiée à sa fonctionnalité ou à sa correction :
+
+```bash
+git switch -c feat/nom-de-la-fonctionnalite
+```
+
+3. Développer et tester ses modifications.
+
+4. Ajouter et committer les changements :
+
+```bash
+git add .
+git commit -m "feat: description de la fonctionnalité"
+```
+
+5. Envoyer sa branche sur GitHub :
+
+```bash
+git push -u origin feat/nom-de-la-fonctionnalite
+```
+
+6. Ouvrir une Pull Request vers `master`.
+
+7. Faire relire et valider les modifications avant leur fusion.
+
+### Convention de commits
+
+Nous utilisons les préfixes suivants :
+
+| Préfixe     | Utilisation                      |
+| ----------- | -------------------------------- |
+| `feat:`     | Ajout d'une fonctionnalité       |
+| `fix:`      | Correction d'un bug              |
+| `docs:`     | Modification de la documentation |
+| `refactor:` | Réorganisation du code           |
+| `test:`     | Ajout ou modification de tests   |
+| `chore:`    | Maintenance et configuration     |
+
+## 11. Équipe
+
+Projet réalisé dans le cadre de notre formation en développement web et DevOps.
+
+| Collaborateur  | GitHub                                               |
+| -------------- | ---------------------------------------------------- |
+| Monteiro David | [@Monteiro-David](https://github.com/Monteiro-David) |
+| Assy Wone      | [@sywone75-png](https://github.com/sywone75-png)     |
+| Mayulie        | [@Mayulie](https://github.com/Mayulie)               |
+
+---
+
+_Joya — Organiser ensemble, simplement._
