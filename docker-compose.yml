@@ -9,8 +9,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - ./Back-end/database/migration/migration_up.sql:/docker-entrypoint-initdb.d/01-migration_up.sql
+      - ./Back-end/database/seeds/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+      - ./Back-end/database/seeds/seed_2026_11.sql:/docker-entrypoint-initdb.d/03-seed_2026_11.sql
       - LoveLace-data:/var/lib/postgresql/data
-
   backend:
     build:
       context: ./Back-end
@@ -35,5 +37,80 @@ services:
     depends_on:
       - backend
 
+  prometheus:
+    image: prom/prometheus:v3.16.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+    healthcheck:
+      test: ["CMD", "promtool", "check", "ready", "--url=http://127.0.0.1:9090"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  loki:
+    image: grafana/loki:3.7.10
+    restart: unless-stopped
+    volumes:
+      - loki-data:/loki
+
+  alloy:
+    image: grafana/alloy:v1.22.0
+    restart: unless-stopped
+    depends_on:
+      - loki
+    command: ["run", "--storage.path=/var/lib/alloy/data", "/etc/alloy/config.alloy"]
+    environment:
+      - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+        bind:
+          create_host_path: false
+      - alloy-data:/var/lib/alloy/data
+
+  grafana:
+    image: grafana/grafana:13.3.2
+    restart: unless-stopped
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    configs:
+      - source: grafana-datasource
+        target: /etc/grafana/provisioning/datasources/datasources.yml
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+configs:
+  grafana-datasource:
+    content: |
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus:9090
+          isDefault: true
+        - name: Loki
+          type: loki
+          access: proxy
+          url: http://loki:3100
+
 volumes:
+  prometheus-data:
+  grafana-data:
+  loki-data:
+  alloy-data:
   LoveLace-data:
