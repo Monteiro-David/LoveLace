@@ -2,18 +2,18 @@
 
 ## Sommaire
 
--   [1. Le projet](#1-le-projet)
--   [2. Stack technique](#2-stack-technique)
--   [3. Prérequis](#3-prérequis)
--   [4. Installation](#4-installation)
--   [5. Lancer le projet](#5-lancer-le-projet)
--   [6. Scripts disponibles](#6-scripts-disponibles)
--   [7. Dépendances du projet](#7-dépendances-du-projet)
--   [8. Structure du projet](#8-structure-du-projet)
--   [9. Tests et données de test](#9-tests-et-données-de-test)
--   [10. Dépannage](#10-dépannage)
--   [11. Contribuer](#11-contribuer)
--   [12. Équipe](#12-équipe)
+- [1. Le projet](#1-le-projet)
+- [2. Stack technique](#2-stack-technique)
+- [3. Prérequis](#3-prérequis)
+- [4. Installation](#4-installation)
+- [5. Lancer le projet](#5-lancer-le-projet)
+- [6. Scripts disponibles](#6-scripts-disponibles)
+- [7. Dépendances du projet](#7-dépendances-du-projet)
+- [8. Structure du projet](#8-structure-du-projet)
+- [9. Tests et données de test](#9-tests-et-données-de-test)
+- [10. Dépannage](#10-dépannage)
+- [11. Contribuer](#11-contribuer)
+- [12. Équipe](#12-équipe)
 
 ## 1. Le projet
 
@@ -26,14 +26,14 @@ organisation des événements.
 
 ### Fonctionnalités développées
 
--   **Authentification et gestion des profils :** inscription, connexion
-    et gestion du profil utilisateur.
--   **Création et gestion des groupes :** création et administration de
-    groupes.
--   **Gestion des membres et invitations :** ajout, gestion des membres
-    et invitations à rejoindre un groupe.
--   **Création et gestion des événements :** organisation et gestion des
-    événements au sein des groupes.
+- **Authentification et gestion des profils :** inscription, connexion
+  et gestion du profil utilisateur.
+- **Création et gestion des groupes :** création et administration de
+  groupes.
+- **Gestion des membres et invitations :** ajout, gestion des membres
+  et invitations à rejoindre un groupe.
+- **Création et gestion des événements :** organisation et gestion des
+  événements au sein des groupes.
 
 Le projet évolue progressivement dans le cadre de notre formation en
 développement et DevOps.
@@ -42,32 +42,32 @@ développement et DevOps.
 
 ### Frontend
 
--   **React 19 :** bibliothèque JavaScript pour construire l'interface
-    utilisateur.
--   **Vite :** outil de développement et de compilation.
--   **React Router DOM :** gestion de la navigation.
--   **ESLint :** analyse et vérification du code.
+- **React 19 :** bibliothèque JavaScript pour construire l'interface
+  utilisateur.
+- **Vite :** outil de développement et de compilation.
+- **React Router DOM :** gestion de la navigation.
+- **ESLint :** analyse et vérification du code.
 
 ### Backend
 
--   **Node.js :** environnement d'exécution JavaScript.
--   **Express 5 :** framework pour construire l'API REST.
--   **PostgreSQL 16 :** système de gestion de base de données
-    relationnelle.
--   **node-postgres (`pg`) :** connexion entre le backend et PostgreSQL.
--   **JWT :** gestion des jetons d'authentification.
--   **bcryptjs :** hachage et vérification des mots de passe.
--   **cookie-parser :** lecture des cookies HTTP.
--   **dotenv :** chargement des variables d'environnement.
--   **CORS :** gestion des échanges entre frontend et backend.
+- **Node.js :** environnement d'exécution JavaScript.
+- **Express 5 :** framework pour construire l'API REST.
+- **PostgreSQL 16 :** système de gestion de base de données
+  relationnelle.
+- **node-postgres (`pg`) :** connexion entre le backend et PostgreSQL.
+- **JWT :** gestion des jetons d'authentification.
+- **bcryptjs :** hachage et vérification des mots de passe.
+- **cookie-parser :** lecture des cookies HTTP.
+- **dotenv :** chargement des variables d'environnement.
+- **CORS :** gestion des échanges entre frontend et backend.
 
 ### DevOps
 
--   **Docker :** conteneurisation des services.
--   **Docker Compose :** orchestration du frontend, du backend et de la
-    base de données.
--   **GitHub Actions :** mise en place progressive de l'intégration
-    continue (CI).
+- **Docker :** conteneurisation des services.
+- **Docker Compose :** orchestration du frontend, du backend et de la
+  base de données.
+- **GitHub Actions :** mise en place progressive de l'intégration
+  continue (CI).
 
 La démarche DevOps est enrichie au fur et à mesure de notre
 apprentissage.
@@ -76,14 +76,14 @@ apprentissage.
 
 Avant de démarrer le projet, vous devez disposer des outils suivants :
 
--   Git
--   Node.js et npm
--   Docker
--   Docker Compose
+- Git
+- Node.js et npm
+- Docker
+- Docker Compose
 
 Vérifier les installations :
 
-``` bash
+```bash
 node --version
 npm --version
 docker --version
@@ -95,7 +95,7 @@ git --version
 
 ### 4.1 Cloner le projet
 
-``` bash
+```bash
 git clone https://github.com/Monteiro-David/LoveLace.git
 cd LoveLace
 ```
@@ -104,21 +104,21 @@ cd LoveLace
 
 Installer les dépendances du backend :
 
-``` bash
+```bash
 cd Back-end
 npm install
 ```
 
 Revenir à la racine puis installer celles du frontend :
 
-``` bash
+```bash
 cd ../Front-end
 npm install
 ```
 
 Revenir à la racine du projet :
 
-``` bash
+```bash
 cd ..
 ```
 
@@ -130,16 +130,15 @@ fourni.
 
 Depuis la racine du projet, exécuter :
 
-``` bash
+```bash
 cp Back-end/.env.example Back-end/.env
 ```
 
 Ouvrir ensuite `Back-end/.env` et remplacer les valeurs d'exemple par
 les valeurs de votre environnement :
 
-``` env
-# Configuration du serveur Express
-PORT=3000
+```env
+
 
 # Configuration PostgreSQL
 DB_HOST=database
@@ -157,38 +156,39 @@ FRONT_URL=http://localhost:5173
 
 #### Rôle des variables
 
-  -----------------------------------------------------------------------
-  Variable                            Description
-  ----------------------------------- -----------------------------------
-  `PORT`                              Port sur lequel le serveur Express
-                                      écoute. Obligatoire.
+---
 
-  `DB_HOST`                           Hôte PostgreSQL. Utiliser
-                                      `database` depuis le conteneur
-                                      backend.
+Variable Description
 
-  `DB_PORT`                           Port PostgreSQL. Obligatoire.
+---
 
-  `DB_USER`                           Utilisateur PostgreSQL.
+`DB_HOST` Hôte PostgreSQL. Utiliser
+`database` depuis le conteneur
+backend.
 
-  `DB_PASSWORD`                       Mot de passe de cet utilisateur
-                                      PostgreSQL.
+`DB_PORT` Port PostgreSQL. Obligatoire.
 
-  `DB_NAME`                           Nom de la base de données.
+`DB_USER` Utilisateur PostgreSQL.
 
-  `JWT_SECRET`                        Secret privé utilisé pour signer et
-                                      vérifier les jetons JWT.
+`DB_PASSWORD` Mot de passe de cet utilisateur
+PostgreSQL.
 
-  `FRONT_URL`                         Origine autorisée du frontend pour
-                                      CORS. Si elle n'est pas définie, le
-                                      backend utilise
-                                      `http://localhost:5173`.
-  -----------------------------------------------------------------------
+`DB_NAME` Nom de la base de données.
 
-Les variables `PORT`, `DB_PORT`, `DB_HOST`, `DB_USER`, `DB_PASSWORD`,
+`JWT_SECRET` Secret privé utilisé pour signer et
+vérifier les jetons JWT.
+
+`FRONT_URL` Origine autorisée du frontend pour
+CORS. Si elle n'est pas définie, le
+backend utilise
+`http://localhost:5173`.
+
+---
+
+Les variables `DB_PORT`, `DB_HOST`, `DB_USER`, `DB_PASSWORD`,
 `DB_NAME` et `JWT_SECRET` doivent être renseignées. Le backend vérifie
-la présence des variables obligatoires et contrôle que `PORT` et
-`DB_PORT` sont des numéros de port valides. En cas de variable manquante
+la présence de la variable obligatoire et contrôle que
+`DB_PORT` soit un numéro de port valide. En cas de variable manquante
 ou de port invalide, le démarrage du backend est interrompu avec un
 message d'erreur.
 
@@ -197,7 +197,7 @@ message d'erreur.
 Ne pas utiliser une valeur facile à deviner telle que `ton_secret` ou
 `123456`. Pour générer un secret aléatoire avec OpenSSL :
 
-``` bash
+```bash
 openssl rand -base64 64
 ```
 
@@ -213,7 +213,7 @@ de gestion des secrets de l'environnement de déploiement. - Si le secret
 JWT est compromis, le remplacer. Les jetons signés avec l'ancien secret
 ne seront alors plus vérifiables avec le nouveau.
 
-Le JWT (*JSON Web Token*) est un jeton signé par le backend après
+Le JWT (_JSON Web Token_) est un jeton signé par le backend après
 authentification. Le backend utilise `JWT_SECRET` pour signer le jeton
 et vérifier son authenticité lors des requêtes protégées. Le secret
 reste exclusivement côté serveur : il ne doit jamais être envoyé au
@@ -241,27 +241,29 @@ Le projet utilise Docker Compose pour démarrer les trois services.
 
 Depuis la racine du projet :
 
-``` bash
-docker compose --env-file Back-end/.env up -d --build
+```bash
+docker compose up -d --build
 ```
 
 Cette commande :
 
--   construit les images Docker du frontend et du backend ;
--   démarre le conteneur PostgreSQL ;
--   démarre le backend ;
--   démarre le frontend.
+- construit les images Docker du frontend et du backend ;
+- démarre le conteneur PostgreSQL ;
+- démarre le backend ;
+- démarre le frontend.
 
 ### Ports utilisés
 
 Les ports sont nécessaires au fonctionnement et à l'accès aux services.
 La configuration actuelle utilise :
 
-  Service                  Port du service   Port publié sur la machine
-  ----------------- ---------------------- ----------------------------
-  Frontend Vite                     `5173`                       `5173`
-  Backend Express     `3000` (`PORT=3000`)                       `3000`
-  PostgreSQL                        `5432`                       `5432`
+Service Port du service Port publié sur la machine
+
+---
+
+Frontend Vite `5173` `5173`
+Backend Express `3000` (`PORT=3000`) `3000`
+PostgreSQL `5432` `5432`
 
 Si un port est modifié dans `.env` ou dans `docker-compose.yml`, les
 configurations qui en dépendent doivent être mises à jour ensemble. En
@@ -272,11 +274,13 @@ port cible publié par Docker Compose.
 
 Une fois les conteneurs démarrés :
 
-  Service      Adresse
-  ------------ -----------------------
-  Frontend     http://localhost:5173
-  Backend      http://localhost:3000
-  PostgreSQL   `localhost:5432`
+Service Adresse
+
+---
+
+Frontend http://localhost:5173
+Backend http://localhost:3000
+PostgreSQL `localhost:5432`
 
 ### Initialiser la base de données
 
@@ -284,7 +288,7 @@ L'initialisation de la base de données est effectuée manuellement.
 
 Une fois le conteneur PostgreSQL démarré, exécuter la migration :
 
-``` bash
+```bash
 docker exec -i Lovelace_db psql -U <DB_USER> -d <DB_NAME> < Back-end/database/migration/migration_up.sql
 ```
 
@@ -293,13 +297,13 @@ Remplacer `<DB_USER>` et `<DB_NAME>` par les valeurs renseignées dans
 
 Exécuter ensuite les scripts de seed :
 
-``` bash
+```bash
 docker exec -i Lovelace_db psql -U <DB_USER> -d <DB_NAME> < Back-end/database/seeds/seed.sql
 ```
 
 Si le projet utilise également le jeu de données complémentaire :
 
-``` bash
+```bash
 docker exec -i Lovelace_db psql -U <DB_USER> -d <DB_NAME> < Back-end/database/seeds/seed_2026_11.sql
 ```
 
@@ -316,19 +320,19 @@ des données à conserver.
 
 Afficher les conteneurs actifs :
 
-``` bash
+```bash
 docker compose ps
 ```
 
 Consulter les logs :
 
-``` bash
+```bash
 docker compose logs -f
 ```
 
 Consulter les logs d'un service particulier :
 
-``` bash
+```bash
 docker compose logs -f backend
 docker compose logs -f frontend
 docker compose logs -f database
@@ -338,14 +342,14 @@ docker compose logs -f database
 
 Arrêter les conteneurs :
 
-``` bash
+```bash
 docker compose down
 ```
 
 Pour arrêter les conteneurs et supprimer également le volume de données
 PostgreSQL :
 
-``` bash
+```bash
 docker compose down -v
 ```
 
@@ -358,26 +362,32 @@ dans le volume de la base de données.
 
 Depuis le dossier `Back-end/` :
 
-  -----------------------------------------------------------------------
-  Commande                            Description
-  ----------------------------------- -----------------------------------
-  `npm run dev`                       Démarre le serveur en mode
-                                      développement avec Nodemon.
+---
 
-  `npm start`                         Démarre le serveur en mode
-                                      classique.
-  -----------------------------------------------------------------------
+Commande Description
+
+---
+
+`npm run dev` Démarre le serveur en mode
+développement avec Nodemon.
+
+`npm start` Démarre le serveur en mode
+classique.
+
+---
 
 ### Frontend
 
 Depuis le dossier `Front-end/` :
 
-  Commande            Description
-  ------------------- ------------------------------------------------
-  `npm run dev`       Démarre le serveur Vite en mode développement.
-  `npm run build`     Compile l'application pour la production.
-  `npm run preview`   Prévisualise la version compilée.
-  `npm run lint`      Analyse le code avec ESLint.
+Commande Description
+
+---
+
+`npm run dev` Démarre le serveur Vite en mode développement.
+`npm run build` Compile l'application pour la production.
+`npm run preview` Prévisualise la version compilée.
+`npm run lint` Analyse le code avec ESLint.
 
 Le lancement habituel de l'ensemble du projet se fait avec Docker
 Compose depuis la racine.
@@ -390,28 +400,28 @@ Les dépendances sont gérées séparément pour le frontend et le backend.
 
 Les principales dépendances sont :
 
--   `express` : création de l'API.
--   `pg` : connexion à PostgreSQL.
--   `bcryptjs` : hachage et vérification des mots de passe.
--   `jsonwebtoken` : gestion des jetons JWT.
--   `cookie-parser` : lecture des cookies.
--   `cors` : gestion des requêtes cross-origin.
--   `dotenv` : chargement des variables d'environnement.
--   `nodemon` : redémarrage automatique du serveur en développement.
--   `jest` : bibliothèque installée pour les tests backend.
+- `express` : création de l'API.
+- `pg` : connexion à PostgreSQL.
+- `bcryptjs` : hachage et vérification des mots de passe.
+- `jsonwebtoken` : gestion des jetons JWT.
+- `cookie-parser` : lecture des cookies.
+- `cors` : gestion des requêtes cross-origin.
+- `dotenv` : chargement des variables d'environnement.
+- `nodemon` : redémarrage automatique du serveur en développement.
+- `jest` : bibliothèque installée pour les tests backend.
 
 ### Frontend
 
 Les principales dépendances sont :
 
--   `react` et `react-dom` : construction de l'interface.
--   `react-router-dom` : navigation entre les pages.
--   `vite` : environnement de développement et compilation.
--   `eslint` : qualité et analyse du code.
+- `react` et `react-dom` : construction de l'interface.
+- `react-router-dom` : navigation entre les pages.
+- `vite` : environnement de développement et compilation.
+- `eslint` : qualité et analyse du code.
 
 ## 8. Structure du projet
 
-``` text
+```text
 LoveLace/
 │
 ├── .github/
@@ -470,10 +480,12 @@ sous-dossiers peuvent évoluer au fil du développement.
 Le fichier `Back-end/database/seeds/seed.sql` insère notamment deux
 utilisateurs de démonstration :
 
-  Prénom et nom   Adresse e-mail             Mot de passe présent dans le seed
-  --------------- -------------------------- -----------------------------------
-  John Doe        `john.doe@example.com`     `password123`
-  Jane Smith      `jane.smith@example.com`   `password456`
+Prénom et nom Adresse e-mail Mot de passe présent dans le seed
+
+---
+
+John Doe `john.doe@example.com` `password123`
+Jane Smith `jane.smith@example.com` `password456`
 
 Le seed insère également des groupes, des appartenances à ces groupes,
 des événements, des invitations, des propositions de vote, des tâches et
@@ -496,33 +508,37 @@ identifiants dans le formulaire de connexion.
 
 Les scénarios suivants sont à vérifier manuellement :
 
-  -----------------------------------------------------------------------
-  Scénario                            Résultat attendu
-  ----------------------------------- -----------------------------------
-  Inscription avec tous les champs    Le compte est créé.
-  requis et un e-mail disponible
+---
 
-  Inscription sans un champ           L'API renvoie une erreur de
-  obligatoire                         validation.
+Scénario Résultat attendu
 
-  Inscription avec un e-mail déjà     L'API refuse la création du
-  utilisé                             doublon.
+---
 
-  Connexion avec un e-mail et un mot  L'authentification réussit.
-  de passe valides
+Inscription avec tous les champs Le compte est créé.
+requis et un e-mail disponible
 
-  Connexion avec un mot de passe      L'API refuse l'authentification.
-  incorrect
+Inscription sans un champ L'API renvoie une erreur de
+obligatoire validation.
 
-  Connexion sans e-mail ou sans mot   L'API renvoie une erreur de
-  de passe                            validation.
+Inscription avec un e-mail déjà L'API refuse la création du
+utilisé doublon.
 
-  Accès à une route protégée sans     L'accès est refusé.
-  jeton valide
+Connexion avec un e-mail et un mot L'authentification réussit.
+de passe valides
 
-  Accès à une route protégée avec un  La requête est autorisée selon les
-  jeton valide                        droits de l'utilisateur.
-  -----------------------------------------------------------------------
+Connexion avec un mot de passe L'API refuse l'authentification.
+incorrect
+
+Connexion sans e-mail ou sans mot L'API renvoie une erreur de
+de passe validation.
+
+Accès à une route protégée sans L'accès est refusé.
+jeton valide
+
+Accès à une route protégée avec un La requête est autorisée selon les
+jeton valide droits de l'utilisateur.
+
+---
 
 ### Tests automatisés
 
@@ -542,7 +558,7 @@ devra être complétée avec la commande exacte pour les exécuter.
 
 Vérifier que Docker Desktop est lancé :
 
-``` bash
+```bash
 docker info
 ```
 
@@ -550,7 +566,7 @@ docker info
 
 Afficher les logs :
 
-``` bash
+```bash
 docker compose logs -f
 ```
 
@@ -558,19 +574,19 @@ docker compose logs -f
 
 Vérifier les éléments suivants :
 
--   Le conteneur PostgreSQL est démarré.
--   Les identifiants de connexion sont corrects.
--   `DB_HOST` correspond au nom du service Docker, soit `database`,
-    lorsque le backend tourne dans Docker.
--   Les variables d'environnement sont correctement renseignées.
--   Le fichier `Back-end/.env` est bien utilisé au lancement de Docker
-    Compose avec `--env-file`.
+- Le conteneur PostgreSQL est démarré.
+- Les identifiants de connexion sont corrects.
+- `DB_HOST` correspond au nom du service Docker, soit `database`,
+  lorsque le backend tourne dans Docker.
+- Les variables d'environnement sont correctement renseignées.
+- Le fichier `Back-end/.env` est bien utilisé au lancement de Docker
+  Compose avec `--env-file`.
 
 ### Le frontend ne communique pas avec le backend
 
 Vérifier que les trois conteneurs sont actifs :
 
-``` bash
+```bash
 docker compose ps
 ```
 
@@ -584,7 +600,7 @@ de relancer Docker.
 
 Par exemple :
 
-``` bash
+```bash
 lsof -i :3000
 lsof -i :5173
 lsof -i :5432
@@ -602,14 +618,14 @@ Requests.
 1.  Se placer sur la branche principale et récupérer les dernières
     modifications :
 
-    ``` bash
+    ```bash
     git switch master
     git pull origin master
     ```
 
 2.  Créer une branche dédiée à sa fonctionnalité ou à sa correction :
 
-    ``` bash
+    ```bash
     git switch -c feat/nom-de-la-fonctionnalite
     ```
 
@@ -617,14 +633,14 @@ Requests.
 
 4.  Ajouter et committer les changements :
 
-    ``` bash
+    ```bash
     git add .
     git commit -m "feat: description de la fonctionnalité"
     ```
 
 5.  Envoyer sa branche sur GitHub :
 
-    ``` bash
+    ```bash
     git push -u origin feat/nom-de-la-fonctionnalite
     ```
 
@@ -636,30 +652,36 @@ Requests.
 
 Nous utilisons les préfixes suivants :
 
-  Préfixe       Utilisation
-  ------------- ----------------------------------
-  `feat:`       Ajout d'une fonctionnalité
-  `fix:`        Correction d'un bug
-  `docs:`       Modification de la documentation
-  `refactor:`   Réorganisation du code
-  `test:`       Ajout ou modification de tests
-  `chore:`      Maintenance et configuration
+Préfixe Utilisation
+
+---
+
+`feat:` Ajout d'une fonctionnalité
+`fix:` Correction d'un bug
+`docs:` Modification de la documentation
+`refactor:` Réorganisation du code
+`test:` Ajout ou modification de tests
+`chore:` Maintenance et configuration
 
 ## 12. Équipe
 
 Projet réalisé dans le cadre de notre formation en développement web et
 DevOps.
 
-  ------------------------------------------------------------------------------------------
-  Collaborateur                       GitHub
-  ----------------------------------- ------------------------------------------------------
-  Monteiro David                      [@Monteiro-David](https://github.com/Monteiro-David)
+---
 
-  Assy Wone                           [@sywone75-png](https://github.com/sywone75-png)
+Collaborateur GitHub
 
-  Mayulie                             [@Mayulie](https://github.com/Mayulie)
-  ------------------------------------------------------------------------------------------
+---
 
-------------------------------------------------------------------------
+Monteiro David [@Monteiro-David](https://github.com/Monteiro-David)
+
+Assy Wone [@sywone75-png](https://github.com/sywone75-png)
+
+Mayulie [@Mayulie](https://github.com/Mayulie)
+
+---
+
+---
 
 **Joya --- Organiser ensemble, simplement.**
