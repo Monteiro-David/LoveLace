@@ -1,5 +1,5 @@
---  SELECT *
---  From utilisateur
+ -- SELECT *
+ -- From utilisateur
 
 -- SELECT * 
 -- FROM utilisateur
